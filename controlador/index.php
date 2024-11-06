@@ -19,21 +19,25 @@ class modeloController {
     static function nuevo(){        
         require_once("vista/nuevo.php");
     }
+
     //guardar
     static function guardar() {
-        // Imprimir los datos enviados por POST
-        echo "<pre>";
-        print_r($_POST);
-        echo "</pre>";
-
-        if (isset($_POST['nombre']) && isset($_POST['persona'])) {
+        if (isset($_POST['nombre']) && isset($_POST['apellido_paterno']) && isset($_POST['apellido_materno']) && isset($_POST['rut']) && isset($_POST['sexo']) && isset($_POST['fecha_de_nacimiento']) && isset($_POST['telefono'])) {
             $nombre = $_POST['nombre'];
-            $persona = $_POST['persona'];
-            echo "Nombre: $nombre<br>";
-            echo "Persona: $persona<br>";
+            $apellido_paterno = $_POST['apellido_paterno'];
+            $apellido_materno = $_POST['apellido_materno'];
+            $rut = $_POST['rut'];
+            $sexo = $_POST['sexo'];
+            $fecha_de_nacimiento = $_POST['fecha_de_nacimiento'];
+            $telefono = $_POST['telefono'];
             $data = [
                 'nombre' => $nombre,
-                'apellido_paterno' => $apellido
+                'apellido_paterno' => $apellido_paterno,
+                'apellido_materno' => $apellido_materno,
+                'rut' => $rut,
+                'sexo' => $sexo,
+                'fecha_de_nacimiento' => $fecha_de_nacimiento,
+                'telefono' => $telefono
             ];
             $modelo = new Modelo();
             $resultado = $modelo->insertar('persona', $data);
@@ -45,13 +49,11 @@ class modeloController {
             }
             
             header("Location: http://localhost/mvc/index.php?updated=" . time()); 
-
             exit;
         } else {
             echo "Error: Datos incompletos.<br>";
         }
     }
-    
 
     //editar
     static function editar(){    
@@ -60,13 +62,19 @@ class modeloController {
         $dato = $persona->mostrar("persona","id=".$id);        
         require_once("vista/editar.php");
     }
+
     //actualizar
     static function actualizar() {
-        if (isset($_POST['id']) && isset($_POST['nombre']) && isset($_POST['apellido_paterno'])) {
+        if (isset($_POST['id']) && isset($_POST['nombre']) && isset($_POST['apellido_paterno']) && isset($_POST['apellido_materno']) && isset($_POST['rut']) && isset($_POST['sexo']) && isset($_POST['fecha_de_nacimiento']) && isset($_POST['telefono'])) {
             $id = $_POST['id'];
             $nombre = $_POST['nombre'];
-            $apellido = $_POST['apellido_paterno'];
-            $data = "nombre='$nombre', apellido_paterno='$apellido'";
+            $apellido_paterno = $_POST['apellido_paterno'];
+            $apellido_materno = $_POST['apellido_materno'];
+            $rut = $_POST['rut'];
+            $sexo = $_POST['sexo'];
+            $fecha_de_nacimiento = $_POST['fecha_de_nacimiento'];
+            $telefono = $_POST['telefono'];
+            $data = "nombre='$nombre', apellido_paterno='$apellido_paterno', apellido_materno='$apellido_materno', rut='$rut', sexo='$sexo', fecha_de_nacimiento='$fecha_de_nacimiento', telefono='$telefono'";
             $modelo = new Modelo();
             $resultado = $modelo->actualizar("persona", $data, "id=" . $id);
             
@@ -82,8 +90,6 @@ class modeloController {
             echo "Error: Datos incompletos.<br>";
         }
     }
-    
-
 
     //eliminar
     static function eliminar(){    
@@ -92,9 +98,8 @@ class modeloController {
         $resultado = $persona->eliminar("persona","id=".$id);
         header("location:".urlsite);
     }
-
-    
 }
+
 // index.php o controlador correspondiente
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['m']) && $_GET['m'] == 'guardar') {
