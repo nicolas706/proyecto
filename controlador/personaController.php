@@ -1,7 +1,7 @@
 <?php
 require_once("modelo/persona.php");
 require_once("modelo/cosecha.php");
-
+//HOLA
 class personaController {
     private $model;
 
