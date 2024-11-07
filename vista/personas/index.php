@@ -1,10 +1,10 @@
 <?php
-require_once("layouts/header.php");
+require_once(__DIR__."/../layouts/header.php");
 ?>
+<h1 class="text-center">LISTA DE PERSONAS</h1>
 <a href="index.php?m=nuevo" class="btn">NUEVO</a>
 <table>
     <tr>
-        <td>ID</td>
         <td>NOMBRE</td>
         <td>APELLDIO</td> 
         <td>ACCIÓN</td>       
@@ -15,7 +15,6 @@ require_once("layouts/header.php");
                 foreach($dato as $key => $value)
                     foreach($value as $v):?>
                     <tr>
-                        <td><?php echo $v['id'] ?> </td>
                         <td><?php echo $v['nombre'] ?> </td>
                         <td><?php echo $v['apellido_paterno'] ?> </td>
                         <td>
@@ -32,4 +31,4 @@ require_once("layouts/header.php");
     </tbody>
 </table>
 <?php
-require_once("layouts/footer.php");
+require_once(__DIR__."/../layouts/footer.php");

@@ -1,11 +1,11 @@
 <?php
-class Modelo {
-    private $Modelo;
+class Persona {
+    private $Persona;
     private $db;    
     private $datos;    
 
     public function __construct() {
-        $this->Modelo = array();
+        $this->Persona = array();
         $this->db = new PDO('mysql:host=localhost;dbname=e-cosecha', "root", "");
     }
 
