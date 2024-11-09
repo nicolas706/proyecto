@@ -30,3 +30,4 @@ if (isset($_GET['m'])) {
 } else {
     cosechaController::index(); // Cambia esto para que la vista inicial sea la de cosechas
 }
+//wena nico
