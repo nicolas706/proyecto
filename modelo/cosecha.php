@@ -3,7 +3,8 @@ class Cosecha {
     private $Cosecha;
     private $db;    
     private $datos;    
-
+    //HOLA
+    //yapooo
     public function __construct() {
         $this->Cosecha = array();
         $this->db = new PDO('mysql:host=localhost;dbname=e-cosecha', "root", "");
