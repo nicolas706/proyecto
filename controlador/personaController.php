@@ -9,20 +9,20 @@ class personaController {
         $this->model = new Persona();
     }
 
-    // Método para mostrar la lista de personas
+    // Método para mostrar la lista de persona
     static function index() {
         $persona = new Persona();
         $dato = $persona->mostrar("persona", "1");
-        require_once("vista/personas/index.php");
+        require_once("vista/persona/index.php");
     }
     
     //nuevo
     static function nuevo(){        
         $cosecha = new Cosecha();
         if ($cosecha->hayCosechas()) {
-            require_once("vista/personas/nuevo.php");
+            require_once("vista/persona/nuevo.php");
         } else {
-            echo "Debe registrar una cosecha antes de ingresar personas.";
+            echo "Debe registrar una cosecha antes de ingresar persona.";
             echo "<br><a href='index.php?m=nuevaCosecha'>Registrar Cosecha</a>";
         }
     }
@@ -68,7 +68,7 @@ class personaController {
         $id = $_REQUEST['id'];
         $persona = new Persona();
         $dato = $persona->mostrar("persona","id=".$id);        
-        require_once("vista/personas/editar.php");
+        require_once("vista/persona/editar.php");
     }
 
     //actualizar

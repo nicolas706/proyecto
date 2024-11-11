@@ -1,22 +1,20 @@
 <?php
-class Cosecha {
-    private $Cosecha;
-    private $db;    
-    private $datos;    
-    //HOLA
-    //yapooo
+class Trabajo {
+    private $trabajo;
+    private $db;
+    private $datos;
+
     public function __construct() {
-        $this->Cosecha = array();
+        $this->trabajo = array();
         $this->db = new PDO('mysql:host=localhost;dbname=e-cosecha', "root", "");
     }
 
     public function insertar($tabla, $data) {
-        $consulta = "INSERT INTO " . $tabla . " (año, activa, detalle) VALUES (:año, :activa, :detalle)";
+        $consulta = "INSERT INTO " . $tabla . " (nombre, descripcion) VALUES (:nombre, :descripcion)";
         try {
             $stmt = $this->db->prepare($consulta);
-            $stmt->bindParam(':año', $data['año']);
-            $stmt->bindParam(':activa', $data['activa']);
-            $stmt->bindParam(':detalle', $data['detalle']);
+            $stmt->bindParam(':nombre', $data['nombre']);
+            $stmt->bindParam(':descripcion', $data['descripcion']);
             return $stmt->execute();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage() . "<br>";
@@ -26,19 +24,13 @@ class Cosecha {
 
     public function mostrar($tabla, $condicion) {
         $consul = "SELECT * FROM " . $tabla . " WHERE " . $condicion . ";";
-        try {
-            $resu = $this->db->query($consul);
-            $this->datos = [];
-            while ($filas = $resu->fetchAll(PDO::FETCH_ASSOC)) {
-                $this->datos[] = $filas;
-            }
-            return $this->datos;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return false;
+        $resu = $this->db->query($consul);        
+        while ($filas = $resu->fetchAll(PDO::FETCH_ASSOC)) {
+            $this->datos[] = $filas;
         }
-    }
-    
+        return $this->datos;
+    } 
+
     public function actualizar($tabla, $data, $condicion) {       
         $consulta = "UPDATE " . $tabla . " SET " . $data . " WHERE " . $condicion;
         try {
@@ -58,12 +50,4 @@ class Cosecha {
             return false;
         }
     }
-
-    public function hayCosechas() {
-        $consulta = "SELECT COUNT(*) as total FROM cosecha";
-        $resultado = $this->db->query($consulta);
-        $fila = $resultado->fetch(PDO::FETCH_ASSOC);
-        return $fila['total'] > 0;
-    }
-    
 }

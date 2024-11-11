@@ -1,5 +1,5 @@
 <?php
-require_once("modelo/cosecha.php");
+require_once("mvc/modelo/cosecha.php");
 
 class cosechaController {
     private $model;
@@ -12,12 +12,19 @@ class cosechaController {
     static function index() {
         $cosecha = new Cosecha();
         $dato = $cosecha->mostrar("cosecha", "1");
-        require_once("vista/cosecha/index.php");
+        require_once("mvc/vista/cosecha/index.php");
     }
+<<<<<<< HEAD
 
     // Método para mostrar el formulario de nueva cosecha
     static function nuevaCosecha() {
         require_once("vista/cosecha/nuevo.php");
+=======
+    
+    //nuevo
+    static function nuevo(){        
+        require_once("mvc/vista/cosecha/nuevo.php");
+>>>>>>> bfd1a8c90295479e588e7bc5126b4b6adaaa02d5
     }
 
     // Método para guardar la nueva cosecha
@@ -48,6 +55,7 @@ class cosechaController {
     }
 
     //editar
+<<<<<<< HEAD
     static function editar() {    
         if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
             $id = $_REQUEST['id'];
@@ -57,6 +65,13 @@ class cosechaController {
         } else {
             echo "Error: ID no proporcionado o vacío.";
         }
+=======
+    static function editar(){    
+        $id = $_REQUEST['id'];
+        $cosecha = new Cosecha();
+        $dato = $cosecha->mostrar("cosecha","id=".$id);        
+        require_once("mvc/vista/cosecha/editar.php");
+>>>>>>> bfd1a8c90295479e588e7bc5126b4b6adaaa02d5
     }
     
 
@@ -93,4 +108,9 @@ class cosechaController {
     }
 
     // Método para mostrar el formulario de nueva cosecha
+<<<<<<< HEAD
+=======
+static function nuevaCosecha() {
+    require_once("mvc/vista/cosecha/nuevo.php");
+>>>>>>> bfd1a8c90295479e588e7bc5126b4b6adaaa02d5
 }
