@@ -14,7 +14,6 @@ require_once(__DIR__."/../layouts/header.php");
         <input type="text" value="<?php echo $v['sexo'] ?>" name="sexo" placeholder="INGRESE SEXO:" required> <br>
         <input type="date" value="<?php echo $v['fecha_de_nacimiento'] ?>" name="fecha_de_nacimiento" placeholder="INGRESE FECHA DE NACIMIENTO:" required> <br>
         <input type="text" value="<?php echo $v['telefono'] ?>" name="telefono" placeholder="INGRESE TELEFONO:" maxlength="12" required> <br>
-        <input type="hidden" value="<?php echo $v['id'] ?>" name="id"> <br>
         <input type="submit" class="btn" name="btn" value="ACTUALIZAR"> <br>
         <?php
         endforeach;

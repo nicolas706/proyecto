@@ -7,7 +7,6 @@ require_once(__DIR__ . "/../layouts/header.php");
     foreach($dato as $key => $value):
         foreach($value as $v):
         ?>
-        <input type="hidden" value="<?php echo $v['id'] ?>" name="id"> <br>
         <input type="number" value="<?php echo $v['año'] ?>" name="año" placeholder="INGRESE AÑO:" required> <br>
         <input type="text" value="<?php echo $v['activa'] ?>" name="activa" placeholder="ACTIVA (S/N):" required> <br>
         <input type="text" value="<?php echo $v['detalle'] ?>" name="detalle" placeholder="INGRESE DETALLE:" required> <br>

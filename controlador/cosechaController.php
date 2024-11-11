@@ -14,14 +14,14 @@ class cosechaController {
         $dato = $cosecha->mostrar("cosecha", "1");
         require_once("vista/cosecha/index.php");
     }
-    
-    //nuevo
-    static function nuevo(){        
+
+    // Método para mostrar el formulario de nueva cosecha
+    static function nuevaCosecha() {
         require_once("vista/cosecha/nuevo.php");
     }
 
-    //guardar
-    static function guardar() {
+    // Método para guardar la nueva cosecha
+    static function guardarCosecha() {
         if (isset($_POST['año']) && isset($_POST['activa']) && isset($_POST['detalle'])) {
             $año = $_POST['año'];
             $activa = $_POST['activa'];
@@ -48,12 +48,17 @@ class cosechaController {
     }
 
     //editar
-    static function editar(){    
-        $id = $_REQUEST['id'];
-        $cosecha = new Cosecha();
-        $dato = $cosecha->mostrar("cosecha","id=".$id);        
-        require_once("vista/cosecha/editar.php");
+    static function editar() {    
+        if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
+            $id = $_REQUEST['id'];
+            $cosecha = new Cosecha();
+            $dato = $cosecha->mostrar("cosecha", "id=" . $id);        
+            require_once("vista/cosecha/editar.php");
+        } else {
+            echo "Error: ID no proporcionado o vacío.";
+        }
     }
+    
 
     //actualizar
     static function actualizar() {
@@ -88,36 +93,4 @@ class cosechaController {
     }
 
     // Método para mostrar el formulario de nueva cosecha
-static function nuevaCosecha() {
-    require_once("vista/cosecha/nuevo.php");
 }
-
-// Método para guardar la nueva cosecha
-static function guardarCosecha() {
-    if (isset($_POST['año']) && isset($_POST['activa']) && isset($_POST['detalle'])) {
-        $año = $_POST['año'];
-        $activa = $_POST['activa'];
-        $detalle = $_POST['detalle'];
-        $data = [
-            'año' => $año,
-            'activa' => $activa,
-            'detalle' => $detalle
-        ];
-        $modelo = new Cosecha();
-        $resultado = $modelo->insertar('cosecha', $data);
-        
-        if ($resultado) {
-            echo "Datos insertados correctamente.<br>";
-        } else {
-            echo "Error al insertar los datos.<br>";
-        }
-        
-        header("Location: http://localhost/mvc/index.php?m=cosecha&updated=" . time()); 
-        exit;
-    } else {
-        echo "Error: Datos incompletos.<br>";
-    }
-}
-
-}
-

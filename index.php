@@ -5,8 +5,8 @@ require_once("controlador/cosechaController.php");
 
 if (isset($_GET['m'])) {
     if (method_exists("personaController", $_GET['m'])) {
-        personaController::{$_GET['m']}();
-    } elseif (method_exists("cosechaController", $_GET['m'])) {
+        cosechaController::{$_GET['m']}();
+    } elseif (method_exists("personaController", $_GET['m'])) {
         cosechaController::{$_GET['m']}();
     } elseif ($_GET['m'] == 'nuevaCosecha') {
         cosechaController::nuevaCosecha();
