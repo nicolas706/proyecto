@@ -1,5 +1,5 @@
 <?php
-require_once("modelo/cosecha.php");
+require_once("mvc/modelo/cosecha.php");
 
 class cosechaController {
     private $model;
@@ -12,12 +12,12 @@ class cosechaController {
     static function index() {
         $cosecha = new Cosecha();
         $dato = $cosecha->mostrar("cosecha", "1");
-        require_once("vista/cosecha/index.php");
+        require_once("mvc/vista/cosecha/index.php");
     }
     
     //nuevo
     static function nuevo(){        
-        require_once("vista/cosecha/nuevo.php");
+        require_once("mvc/vista/cosecha/nuevo.php");
     }
 
     //guardar
@@ -52,7 +52,7 @@ class cosechaController {
         $id = $_REQUEST['id'];
         $cosecha = new Cosecha();
         $dato = $cosecha->mostrar("cosecha","id=".$id);        
-        require_once("vista/cosecha/editar.php");
+        require_once("mvc/vista/cosecha/editar.php");
     }
 
     //actualizar
@@ -89,7 +89,7 @@ class cosechaController {
 
     // Método para mostrar el formulario de nueva cosecha
 static function nuevaCosecha() {
-    require_once("vista/cosecha/nuevo.php");
+    require_once("mvc/vista/cosecha/nuevo.php");
 }
 
 // Método para guardar la nueva cosecha

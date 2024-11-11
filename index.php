@@ -1,33 +1,30 @@
 <?php
-require_once("config.php");
-require_once("controlador/personaController.php");
-require_once("controlador/cosechaController.php");
-require_once("controlador/trabajoController.php");
 
-if (isset($_GET['m'])) {
-    if (method_exists("personaController", $_GET['m'])) {
-        personaController::{$_GET['m']}();
-    } elseif (method_exists("cosechaController", $_GET['m'])) {
-        cosechaController::{$_GET['m']}();
-    } elseif (method_exists("trabajoController", $_GET['m'])) {
-        trabajoController::{$_GET['m']}();
-   # } elseif (method_exists("trabajadorController", $_GET['m'])) { // Agrega esta condición
-    #    trabajoController::{$_GET['m']}();
-    } elseif ($_GET['m'] == 'nuevo') {
-        personaController::nuevo();
-    } elseif ($_GET['m'] == 'guardar') {
-        personaController::guardar();
-    } elseif ($_GET['m'] == 'nuevaCosecha') {
-        cosechaController::nuevaCosecha();
-    } elseif ($_GET['m'] == 'guardarCosecha') {
-        cosechaController::guardarCosecha();
-    } elseif ($_GET['m'] == 'actualizarCosecha') {
-        cosechaController::actualizar();
-    } else {
-        personaController::index();
-    }
-    
-} else {
-    cosechaController::index(); // Cambia esto para que la vista inicial sea la de cosechas
+$request = $_GET['route'] ?? ''; // Captura la ruta desde la URL
+
+switch ($request) {
+    case '':
+    case 'cosecha':
+        require_once 'controlador/cosechaController.php';
+        $controller = new cosechaController();
+        $controller->index();
+        break;
+
+    case 'persona':
+        require_once 'controlador/personaController.php';
+        $controller = new personaController();
+        $controller->index();
+        break;
+
+    case 'trabajo':
+        require_once 'controlador/trabajoController.php';
+        $controller = new trabajoController();
+        $controller->index();
+        break;
+
+    default:
+        http_response_code(404);
+        echo "404 - Página no encontrada";
+        break;
 }
-//wena nico
+?> 
