@@ -20,6 +20,10 @@ switch ($request) {
             case 'editar':
                 $controller->editarCosecha();
                 break;
+            
+            case 'actualizar':
+                $controller->actualizarCosecha();
+                break; 
 
             case 'eliminar':
                 $controller->eliminarCosecha();
@@ -35,13 +39,13 @@ switch ($request) {
         require_once 'controlador/personaController.php';
         $controller = new personaController();
         switch ($action) {
-                
-            case 'guardar':
-                $controller->guardarPersona();
-                break;
 
             case 'nuevo':
                 $controller->nuevaPersona();
+                break;
+
+            case 'guardar':
+                $controller->guardarPersona();
                 break;
                 
             case 'editar':

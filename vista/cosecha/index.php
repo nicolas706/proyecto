@@ -18,12 +18,12 @@ require_once("controlador/cosechaController.php");
                 foreach($dato as $key => $value)
                     foreach($value as $v):?>
                     <tr>
-                        <td><?php echo $v['año'] ?> </td>
+                        <td><?php echo $v['anio'] ?> </td>
                         <td><?php echo $v['activa'] ?> </td>
                         <td><?php echo $v['detalle'] ?> </td>
                         <td>
                             <a class="btn" href="index.php?m=cosecha&a=editar&id=<?php echo $v['id']?>">EDITAR</a>
-                            <a class="btn" href="index.php?m=eliminarCosecha&id=<?php echo $v['id']?>" onclick="return confirm('ESTA SEGURO'); false">ELIMINAR</a>
+                            <a class="btn" href="index.php?m=cosecha&a=eliminar&id=<?php echo $v['id']?>" onclick="return confirm('ESTA SEGURO'); false">ELIMINAR</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

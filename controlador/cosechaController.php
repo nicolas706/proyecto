@@ -19,31 +19,55 @@ class cosechaController {
     
 
     // Método para guardar la nueva cosecha
-    static function guardarCosecha() {
-        if (isset($_POST['año']) && isset($_POST['activa']) && isset($_POST['detalle'])) {
-            $año = $_POST['año'];
-            $activa = $_POST['activa'];
-            $detalle = $_POST['detalle'];
-            $data = [
-                'año' => $año,
-                'activa' => $activa,
-                'detalle' => $detalle
-            ];
-            $modelo = new Cosecha();
+    // Método para guardar la nueva cosecha
+static function guardarCosecha() {
+    echo '<pre>';
+    print_r($_POST);
+    echo '</pre>';
+    
+    // Validar que los datos requeridos están presentes
+    if (isset($_POST['anio']) && isset($_POST['activa']) && isset($_POST['detalle'])) {
+        $anio = $_POST['anio']; // Cambiar 'anio' por 'anio' en todas partes para evitar problemas con caracteres especiales
+        $activa = strtolower($_POST['activa']) === 's' ? 1 : 0; // Convertir 's' a 1, cualquier otra cosa a 0
+        $detalle = trim($_POST['detalle']); // Eliminar espacios extra
+
+        // Validar que no estén vacíos
+        if (empty($anio) || empty($detalle)) {
+            echo "Error: anio o Detalle no pueden estar vacíos.<br>";
+            return;
+        }
+
+        // Preparar los datos
+        $data = [
+            'anio' => $anio,
+            'activa' => $activa,
+            'detalle' => $detalle
+        ];
+
+        // Instanciar el modelo y realizar la inserción
+        $modelo = new Cosecha();
+        try {
             $resultado = $modelo->insertar('cosecha', $data);
-            
+
             if ($resultado) {
                 echo "Datos insertados correctamente.<br>";
+                header("Location: http://localhost/mvc/index.php?m=cosecha&a=index");
+                exit;
             } else {
                 echo "Error al insertar los datos.<br>";
             }
-            
-            header("Location: http://localhost/mvc/index.php?m=cosecha&updated=" . time()); 
-            exit;
-        } else {
-            echo "Error: Datos incompletos.<br>";
+        } catch (Exception $e) {
+            echo "Error al procesar la solicitud: " . $e->getMessage() . "<br>";
         }
+    } else {
+        echo "Error: Datos incompletos.<br>";
     }
+}
+
+    
+    
+    
+    
 
     //editar
 
@@ -61,19 +85,15 @@ class cosechaController {
     
 
     //actualizar
-    static function actualizarPersona() {
-        if (isset($_POST['id']) && isset($_POST['nombre']) && isset($_POST['apellido_paterno']) && isset($_POST['apellido_materno']) && isset($_POST['rut']) && isset($_POST['sexo']) && isset($_POST['fecha_de_nacimiento']) && isset($_POST['telefono'])) {
+    static function actualizarCosecha() {
+        if (isset($_POST['id']) && isset($_POST['anio']) && isset($_POST['activa']) && isset($_POST['detalle'])) {
             $id = $_POST['id'];
-            $nombre = $_POST['nombre'];
-            $apellido_paterno = $_POST['apellido_paterno'];
-            $apellido_materno = $_POST['apellido_materno'];
-            $rut = $_POST['rut'];
-            $sexo = $_POST['sexo'];
-            $fecha_de_nacimiento = $_POST['fecha_de_nacimiento'];
-            $telefono = $_POST['telefono'];
-            $data = "nombre='$nombre', apellido_paterno='$apellido_paterno', apellido_materno='$apellido_materno', rut='$rut', sexo='$sexo', fecha_de_nacimiento='$fecha_de_nacimiento', telefono='$telefono'";
-            $modelo = new Persona();
-            $resultado = $modelo->actualizar("persona", $data, "id=" . $id);
+            $anio = $_POST['anio'];
+            $activa = $_POST['activa'];
+            $detalle = $_POST['detalle'];
+            $data = "anio='$anio', activa='$activa', detalle='$detalle'";
+            $modelo = new Cosecha();
+            $resultado = $modelo->actualizar("cosecha", $data, "id=" . $id);
             
             if ($resultado) {
                 echo "Datos actualizados correctamente.<br>";
@@ -81,7 +101,7 @@ class cosechaController {
                 echo "Error al actualizar los datos.<br>";
             }
             
-            header("Location: http://localhost/mvc/index.php?m=persona&a=index");
+            header("Location: http://localhost/mvc/index.php?m=cosecha&a=index");
             exit;
         } else {
             echo "Error: Datos incompletos.<br>";
@@ -91,11 +111,23 @@ class cosechaController {
 
     //eliminar
     
-    static function eliminarCosecha(){    
+    static function eliminarCosecha(){  
+    if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {  
         $id = $_REQUEST['id'];
         $cosecha = new Cosecha();
         $resultado = $cosecha->eliminar("cosecha","id=".$id);
-        header("location:".urlsite);
+        if ($resultado) {
+                echo "cosecha eliminada correctamente.";
+            } else {
+                echo "Error al eliminar la cosecha.";
+            }
+            
+            // Redirigir a la lista de cosechas
+            header("Location: index.php?m=cosecha&a=index");
+            exit;
+        } else {
+            echo "Error: ID no proporcionado o vacío.";
+        }
     }
 
 
