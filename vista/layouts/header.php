@@ -24,8 +24,8 @@
     <header>
         <nav>
             <ul>
-                <li><a href="index.php">Cosecha</a></li>
-                <li><a href="index.php?m=editarCosecha&id">Persona</a></li>
+                <li><a  class="btn" name="btn" href="index.php">Cosecha</a></li>
+                <li><a  class="btn" name="btn" href="index.php?m=persona&a=index">Persona</a></li>
                 <!-- Agrega más enlaces según sea necesario -->
             </ul>
         </nav>

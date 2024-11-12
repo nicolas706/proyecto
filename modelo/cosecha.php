@@ -3,8 +3,7 @@ class Cosecha {
     private $Cosecha;
     private $db;    
     private $datos;    
-    //HOLA
-    //yapooo
+
     public function __construct() {
         $this->Cosecha = array();
         $this->db = new PDO('mysql:host=localhost;dbname=e-cosecha', "root", "");
@@ -26,13 +25,19 @@ class Cosecha {
 
     public function mostrar($tabla, $condicion) {
         $consul = "SELECT * FROM " . $tabla . " WHERE " . $condicion . ";";
-        $resu = $this->db->query($consul);        
-        while ($filas = $resu->fetchAll(PDO::FETCH_ASSOC)) {
-            $this->datos[] = $filas;
+        try {
+            $resu = $this->db->query($consul);
+            $this->datos = [];
+            while ($filas = $resu->fetchAll(PDO::FETCH_ASSOC)) {
+                $this->datos[] = $filas;
+            }
+            return $this->datos;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
         }
-        return $this->datos;
-    } 
-
+    }
+    
     public function actualizar($tabla, $data, $condicion) {       
         $consulta = "UPDATE " . $tabla . " SET " . $data . " WHERE " . $condicion;
         try {
@@ -52,12 +57,4 @@ class Cosecha {
             return false;
         }
     }
-
-    public function hayCosechas() {
-        $consulta = "SELECT COUNT(*) as total FROM cosecha";
-        $resultado = $this->db->query($consulta);
-        $fila = $resultado->fetch(PDO::FETCH_ASSOC);
-        return $fila['total'] > 0;
-    }
-    
 }

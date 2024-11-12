@@ -1,7 +1,7 @@
 <?php
-require_once("modelo/persona.php");
-require_once("modelo/cosecha.php");
-//HOLA
+require_once dirname(__DIR__) . '/modelo/persona.php';
+
+
 class personaController {
     private $model;
 
@@ -16,20 +16,10 @@ class personaController {
         require_once("vista/persona/index.php");
     }
     
-    //nuevo
-    static function nuevo(){        
-        $cosecha = new Cosecha();
-        if ($cosecha->hayCosechas()) {
-            require_once("vista/persona/nuevo.php");
-        } else {
-            echo "Debe registrar una cosecha antes de ingresar persona.";
-            echo "<br><a href='index.php?m=nuevaCosecha'>Registrar Cosecha</a>";
-        }
-    }
     
 
     //guardar
-    static function guardar() {
+    static function guardarPersona() {
         if (isset($_POST['nombre']) && isset($_POST['apellido_paterno']) && isset($_POST['apellido_materno']) && isset($_POST['rut']) && isset($_POST['sexo']) && isset($_POST['fecha_de_nacimiento']) && isset($_POST['telefono'])) {
             $nombre = $_POST['nombre'];
             $apellido_paterno = $_POST['apellido_paterno'];
@@ -56,23 +46,29 @@ class personaController {
                 echo "Error al insertar los datos.<br>";
             }
             
-            header("Location: http://localhost/mvc/index.php?updated=" . time()); 
+            header("Location: http://localhost/mvc/index.php?m=persona&a=index" . time()); 
             exit;
         } else {
             echo "Error: Datos incompletos.<br>";
         }
     }
 
+    //nueva
+    static function nuevaPersona() {
+        require_once("vista/persona/nuevo.php");
+    }
+    
+
     //editar
-    static function editar(){    
+    static function editarPersona(){    
         $id = $_REQUEST['id'];
         $persona = new Persona();
         $dato = $persona->mostrar("persona","id=".$id);        
         require_once("vista/persona/editar.php");
     }
 
-    //actualizar
-    static function actualizar() {
+    //actualizar    
+    static function actualizarPersona() {
         if (isset($_POST['id']) && isset($_POST['nombre']) && isset($_POST['apellido_paterno']) && isset($_POST['apellido_materno']) && isset($_POST['rut']) && isset($_POST['sexo']) && isset($_POST['fecha_de_nacimiento']) && isset($_POST['telefono'])) {
             $id = $_POST['id'];
             $nombre = $_POST['nombre'];
@@ -92,18 +88,34 @@ class personaController {
                 echo "Error al actualizar los datos.<br>";
             }
             
-            header("Location: http://localhost/mvc/index.php");
+            header("Location: http://localhost/mvc/index.php?m=persona&a=index");
             exit;
         } else {
             echo "Error: Datos incompletos.<br>";
         }
     }
+    
+    
 
     //eliminar
-    static function eliminar(){    
-        $id = $_REQUEST['id'];
-        $persona = new Persona();
-        $resultado = $persona->eliminar("persona","id=".$id);
-        header("location:".urlsite);
+    static function eliminarPersona() {
+        if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
+            $id = $_REQUEST['id'];
+            $persona = new Persona();
+            $resultado = $persona->eliminar("persona", "id=" . $id);
+            
+            if ($resultado) {
+                echo "Persona eliminada correctamente.";
+            } else {
+                echo "Error al eliminar la persona.";
+            }
+            
+            // Redirigir a la lista de personas
+            header("Location: index.php?m=persona&a=index");
+            exit;
+        } else {
+            echo "Error: ID no proporcionado o vacío.";
+        }
     }
+    
 }

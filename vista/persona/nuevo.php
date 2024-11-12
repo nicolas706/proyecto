@@ -1,8 +1,8 @@
 <?php
-require_once(__DIR__."/../layouts/header.php");
+require_once(__DIR__ . "/../layouts/header.php");
 ?>
 <h1 class="text-center">NUEVA PERSONA</h1>
-<form action="index.php?m=guardar" method="POST">
+<form action="index.php?m=persona&a=guardar" method="POST">
     <input type="text" placeholder="INGRESE NOMBRE:" id="nombre" name="nombre" required>
     <br>
     <input type="text" placeholder="INGRESE APELLIDO PATERNO:" id="apellido_paterno" name="apellido_paterno" required>
@@ -18,8 +18,7 @@ require_once(__DIR__."/../layouts/header.php");
     <input type="text" placeholder="INGRESE TELEFONO:" maxlength="12" id="telefono" name="telefono" required>
     <br>
     <input type="submit" class="btn" name="btn" value="GUARDAR"> <br>
-    <input type="hidden" name="m" value="guardar">
 </form>
 <?php
-require_once(__DIR__."/../layouts/footer.php");
+require_once(__DIR__ . "/../layouts/footer.php");
 ?>
