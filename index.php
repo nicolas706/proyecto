@@ -1,38 +1,67 @@
 <?php
-
-<<<<<<< HEAD
-if (isset($_GET['m'])) {
-    if (method_exists("personaController", $_GET['m'])) {
-        cosechaController::{$_GET['m']}();
-    } elseif (method_exists("personaController", $_GET['m'])) {
-        cosechaController::{$_GET['m']}();
-    } elseif ($_GET['m'] == 'nuevaCosecha') {
-        cosechaController::nuevaCosecha();
-    } elseif ($_GET['m'] == 'guardarCosecha') {
-        cosechaController::guardarCosecha();
-    } elseif ($_GET['m'] == 'actualizarCosecha') {
-        cosechaController::actualizar();
-    } else {
-        personaController::index();
-    }
-} else {
-    cosechaController::index(); // Cambia esto para que la vista inicial sea la de cosechas
-=======
-$request = $_GET['route'] ?? ''; // Captura la ruta desde la URL
+$request = $_GET['m'] ?? ''; // Captura la ruta desde la URL
+$action = $_GET['a'] ?? null; // Captura el id desde la URL, si existe
 
 switch ($request) {
     case '':
     case 'cosecha':
         require_once 'controlador/cosechaController.php';
         $controller = new cosechaController();
-        $controller->index();
+        
+        switch ($action) {
+            case 'nuevo':
+                $controller->nuevaCosecha();
+                break;
+                
+            case 'guardar':
+                $controller->guardarCosecha();
+                break;
+                
+            case 'editar':
+                $controller->editarCosecha();
+                break;
+
+            case 'eliminar':
+                $controller->eliminarCosecha();
+                break;
+
+            default:
+                $controller->index();
+                break;
+        }
         break;
 
     case 'persona':
         require_once 'controlador/personaController.php';
         $controller = new personaController();
-        $controller->index();
+        switch ($action) {
+                
+            case 'guardar':
+                $controller->guardarPersona();
+                break;
+
+            case 'nuevo':
+                $controller->nuevaPersona();
+                break;
+                
+            case 'editar':
+                $controller->editarPersona();
+                break;
+
+            case 'actualizar':
+                $controller->actualizarPersona();
+                break;
+
+            case 'eliminar':
+                $controller->eliminarPersona();
+                break;
+
+            default:
+                $controller->index();
+                break;
+        }
         break;
+    
 
     case 'trabajo':
         require_once 'controlador/trabajoController.php';
@@ -44,6 +73,5 @@ switch ($request) {
         http_response_code(404);
         echo "404 - Página no encontrada";
         break;
->>>>>>> bfd1a8c90295479e588e7bc5126b4b6adaaa02d5
 }
-?> 
+?>

@@ -3,8 +3,7 @@ class Cosecha {
     private $Cosecha;
     private $db;    
     private $datos;    
-    //HOLA
-    //yapooo
+
     public function __construct() {
         $this->Cosecha = array();
         $this->db = new PDO('mysql:host=localhost;dbname=e-cosecha', "root", "");
@@ -58,12 +57,4 @@ class Cosecha {
             return false;
         }
     }
-
-    public function hayCosechas() {
-        $consulta = "SELECT COUNT(*) as total FROM cosecha";
-        $resultado = $this->db->query($consulta);
-        $fila = $resultado->fetch(PDO::FETCH_ASSOC);
-        return $fila['total'] > 0;
-    }
-    
 }
