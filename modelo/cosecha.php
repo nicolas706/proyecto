@@ -10,18 +10,22 @@ class Cosecha {
     }
 
     public function insertar($tabla, $data) {
-        $consulta = "INSERT INTO " . $tabla . " (año, activa, detalle) VALUES (:año, :activa, :detalle)";
+        $consulta = "INSERT INTO " . $tabla . " (anio, activa, detalle) VALUES (:anio, :activa, :detalle)";
         try {
             $stmt = $this->db->prepare($consulta);
-            $stmt->bindParam(':año', $data['año']);
-            $stmt->bindParam(':activa', $data['activa']);
-            $stmt->bindParam(':detalle', $data['detalle']);
+            $stmt->bindParam(':anio', $data['anio'], PDO::PARAM_INT);
+            $stmt->bindParam(':activa', $data['activa'], PDO::PARAM_INT);
+            $stmt->bindParam(':detalle', $data['detalle'], PDO::PARAM_STR);
             return $stmt->execute();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage() . "<br>";
             return false;
         }
     }
+    
+    
+    
+    
 
     public function mostrar($tabla, $condicion) {
         $consul = "SELECT * FROM " . $tabla . " WHERE " . $condicion . ";";
