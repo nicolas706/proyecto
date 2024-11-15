@@ -26,6 +26,7 @@
             <ul>
                 <li><a  class="btn" name="btn" href="index.php">Cosecha</a></li>
                 <li><a  class="btn" name="btn" href="index.php?m=persona&a=index">Persona</a></li>
+                <li><a  class="btn" name="btn" href="index.php?m=trabajador&a=index">Trabajador</a></li>
                 <!-- Agrega más enlaces según sea necesario -->
             </ul>
         </nav>

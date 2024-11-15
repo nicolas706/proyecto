@@ -67,10 +67,35 @@ switch ($request) {
         break;
     
 
-    case 'trabajo':
-        require_once 'controlador/trabajoController.php';
-        $controller = new trabajoController();
-        $controller->index();
+    case 'trabajador':
+        require_once 'controlador/trabajadorController.php';
+        $controller = new trabajadorController();
+        switch ($action) {
+
+            case 'nuevo':
+                $controller->nuevaTrabajador();
+                break;
+
+            case 'guardar':
+                $controller->guardarTrabajador();
+                break;
+                
+            case 'editar':
+                $controller->editarTrabajador();
+                break;
+
+            case 'actualizar':
+                $controller->actualizarTrabajador();
+                break;
+
+            case 'eliminar':
+                $controller->eliminarTrabajador();
+                break;
+
+            default:
+                $controller->index();
+                break;
+        }
         break;
 
     default:

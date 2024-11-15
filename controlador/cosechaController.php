@@ -22,7 +22,7 @@ class cosechaController {
     // Método para guardar la nueva cosecha
 static function guardarCosecha() {
     echo '<pre>';
-    print_r($_POST);
+
     echo '</pre>';
     
     // Validar que los datos requeridos están presentes

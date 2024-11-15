@@ -5,8 +5,7 @@ require_once(__DIR__."/../layouts/header.php");
 <a href="index.php?m=persona&a=nuevo" class="btn">NUEVA PERSONA</a>
 <table>
     <tr>
-        <td>NOMBRE</td>
-        <td>APELLDIO</td> 
+        <td>NOMBRE COMPLETO</td>
         <td>ACCIÓN</td>       
     </tr>
     <tbody>
@@ -15,8 +14,7 @@ require_once(__DIR__."/../layouts/header.php");
                 foreach($dato as $key => $value)
                     foreach($value as $v):?>
                     <tr>
-                        <td><?php echo $v['nombre'] ?> </td>
-                        <td><?php echo $v['apellido_paterno'] ?> </td>
+                        <td><?php echo $v['nombre'] . ' ' . $v['apellido_paterno'] . ' ' . $v['apellido_materno'] ?> </td>
                         <td>
                             <a class="btn" href="index.php?m=persona&a=editar&id=<?php echo $v['id']?>">EDITAR</a>
                             <a class="btn" href="index.php?m=persona&a=eliminar&id=<?php echo $v['id']; ?>" onclick="return confirm('¿Está seguro de que desea eliminar esta persona?');">ELIMINAR</a>
