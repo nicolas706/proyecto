@@ -18,51 +18,51 @@ class cosechaController {
     }
     
 
-    // Método para guardar la nueva cosecha
-    // Método para guardar la nueva cosecha
-static function guardarCosecha() {
-    echo '<pre>';
-
-    echo '</pre>';
     
-    // Validar que los datos requeridos están presentes
-    if (isset($_POST['anio']) && isset($_POST['activa']) && isset($_POST['detalle'])) {
-        $anio = $_POST['anio']; // Cambiar 'anio' por 'anio' en todas partes para evitar problemas con caracteres especiales
-        $activa = strtolower($_POST['activa']) === 's' ? 1 : 0; // Convertir 's' a 1, cualquier otra cosa a 0
-        $detalle = trim($_POST['detalle']); // Eliminar espacios extra
+    // Método para guardar la nueva cosecha
+    static function guardarCosecha() {
+        echo '<pre>';
 
-        // Validar que no estén vacíos
-        if (empty($anio) || empty($detalle)) {
-            echo "Error: anio o Detalle no pueden estar vacíos.<br>";
-            return;
-        }
+        echo '</pre>';
+        
+        // Validar que los datos requeridos están presentes
+        if (isset($_POST['anio']) && isset($_POST['activa']) && isset($_POST['detalle'])) {
+            $anio = $_POST['anio']; // Cambiar 'anio' por 'anio' en todas partes para evitar problemas con caracteres especiales
+            $activa = strtolower($_POST['activa']) === 's' ? 1 : 0; // Convertir 's' a 1, cualquier otra cosa a 0
+            $detalle = trim($_POST['detalle']); // Eliminar espacios extra
 
-        // Preparar los datos
-        $data = [
-            'anio' => $anio,
-            'activa' => $activa,
-            'detalle' => $detalle
-        ];
-
-        // Instanciar el modelo y realizar la inserción
-        $modelo = new Cosecha();
-        try {
-            $resultado = $modelo->insertar('cosecha', $data);
-
-            if ($resultado) {
-                echo "Datos insertados correctamente.<br>";
-                header("Location: http://localhost/mvc/index.php?m=cosecha&a=index");
-                exit;
-            } else {
-                echo "Error al insertar los datos.<br>";
+            // Validar que no estén vacíos
+            if (empty($anio) || empty($detalle)) {
+                echo "Error: anio o Detalle no pueden estar vacíos.<br>";
+                return;
             }
-        } catch (Exception $e) {
-            echo "Error al procesar la solicitud: " . $e->getMessage() . "<br>";
+
+            // Preparar los datos
+            $data = [
+                'anio' => $anio,
+                'activa' => $activa,
+                'detalle' => $detalle
+            ];
+
+            // Instanciar el modelo y realizar la inserción
+            $modelo = new Cosecha();
+            try {
+                $resultado = $modelo->insertar('cosecha', $data);
+
+                if ($resultado) {
+                    echo "Datos insertados correctamente.<br>";
+                    header("Location: http://localhost/mvc/index.php?m=cosecha&a=index");
+                    exit;
+                } else {
+                    echo "Error al insertar los datos.<br>";
+                }
+            } catch (Exception $e) {
+                echo "Error al procesar la solicitud: " . $e->getMessage() . "<br>";
+            }
+        } else {
+            echo "Error: Datos incompletos.<br>";
         }
-    } else {
-        echo "Error: Datos incompletos.<br>";
     }
-}
 
     
     
