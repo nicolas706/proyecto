@@ -36,20 +36,18 @@ class trabajadorController {
             $persona_id = $_POST['persona_id'];
             $codigo = $_POST['codigo'];
     
-            $modelo = new Trabajador();
-            
-            // Validar si el código ya existe
-            if ($modelo->codigoExiste($codigo)) {
-                header("Location: index.php?m=trabajador&a=nuevo&msg=duplicado");
-                exit;
-            }
-    
             $data = [
                 'cosecha_id' => $cosecha_id,
                 'tipo_trabajo_id' => $tipo_trabajo_id,
                 'persona_id' => $persona_id,
                 'codigo' => $codigo
             ];
+    
+            $modelo = new Trabajador();
+            if ($modelo->codigoExiste($codigo)) {
+                header("Location: index.php?m=trabajador&a=nuevo&msg=duplicado");
+                exit;
+            }
     
             $resultado = $modelo->insertar('trabajador', $data);
     
