@@ -72,6 +72,7 @@ switch ($request) {
     case 'persona':
         require_once 'controlador/personaController.php';
         $controller = new personaController();
+        //testing
         switch ($action) {
 
             case 'nuevo':
