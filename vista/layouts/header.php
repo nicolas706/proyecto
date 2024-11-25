@@ -10,7 +10,10 @@
 <body>
    <div class="panel">
        <h1 class="text-center">E-COSECHA</h1>
-       
+       <li class="cerrar-sesion">
+                <a href="includes/logout.php">Cerrar sesión</a>
+            </li>
+        </ul>   
        <!-- contenido-->
 <!DOCTYPE html>
 <html lang="es">

@@ -1,40 +1,44 @@
 <?php
-$request = $_GET['m'] ?? ''; // Captura la ruta desde la URL
-$action = $_GET['a'] ?? null; // Captura el id desde la URL, si existe
+session_start(); // Inicia la sesión
 
-include_once 'includes/user.php';
-include_once 'includes/user_session.php';
+// Incluye las clases necesarias
+require_once 'includes/user.php';
+require_once 'includes/user_session.php';
 
+// Captura parámetros de la URL
+$request = $_GET['m'] ?? ''; // Ruta
+$action = $_GET['a'] ?? null; // Acción
 
+// Manejo de sesión
 $userSession = new UserSession();
 $user = new User();
 
-if(isset($_SESSION['user'])){
-    echo "hay sesion";
-    $user->setUser($userSession->getCurrentUser());
-    include_once 'vista/cosecha/index.php';
+// Verifica si hay una sesión activa
+if (!$userSession->getCurrentUser()) {
+    // Si no hay sesión, maneja el inicio de sesión
+    if (isset($_POST['username']) && isset($_POST['password'])) {
+        $userForm = $_POST['username'];
+        $passForm = $_POST['password'];
 
-}else if(isset($_POST['username']) && isset($_POST['password'])){
-    
-    $userForm = $_POST['username'];
-    $passForm = $_POST['password'];
-
-    $user = new User();
-    if($user->userExists($userForm, $passForm)){
-        echo "Existe el usuario";
-        $userSession->setCurrentUser($userForm);
-        $user->setUser($userForm);
-
-        include_once 'vista/cosecha/index.php';
-    }else{
-        echo "No existe el usuario";
-        $errorLogin = "Nombre de usuario y/o password incorrecto";
-        include_once 'vista/login.php';
+        // Valida usuario y contraseña
+        if ($user->userExists($userForm, $passForm)) {
+            // Usuario validado
+            $userSession->setCurrentUser($userForm);
+            $user->setUser($userForm);
+            header("Location: index.php"); // Redirige a la página principal
+            exit;
+        } else {
+            // Credenciales incorrectas
+            $errorLogin = "Nombre de usuario y/o contraseña incorrecto";
+        }
     }
-}else{
-    echo "login";
-    include_once 'vista/login.php';
+    // Muestra la vista de inicio de sesión
+    include 'vista/login.php';
+    exit;
 }
+
+// Si hay sesión activa, carga la aplicación principal
+include 'vista/layouts/header.php';
 
 switch ($request) {
     case '':
@@ -72,7 +76,6 @@ switch ($request) {
     case 'persona':
         require_once 'controlador/personaController.php';
         $controller = new personaController();
-        //testing
         switch ($action) {
 
             case 'nuevo':
@@ -101,98 +104,37 @@ switch ($request) {
         }
         break;
     
-    case 'trabajador':
-        require_once 'controlador/trabajadorController.php';
-        $controller = new trabajadorController();
-        switch ($action) {
+        case 'trabajador':
+            require_once 'controlador/trabajadorController.php';
+            $controller = new trabajadorController();
+            switch ($action) {
+    
+                case 'nuevo':
+                    $controller->nuevaTrabajador();
+                    break;
+    
+                case 'guardar':
+                    $controller->guardarTrabajador();
+                    break;
+                    
+                case 'editar':
+                    $controller->editarTrabajador();
+                    break;
+    
+                case 'actualizar':
+                    $controller->actualizarTrabajador();
+                    break;
+    
+                case 'eliminar':
+                    $controller->eliminarTrabajador();
+                    break;
+    
+                default:
+                    $controller->index();
+                    break;
+            }
+            break;
 
-            case 'nuevo':
-                $controller->nuevaTrabajador();
-                break;
-
-            case 'guardar':
-                $controller->guardarTrabajador();
-                break;
-                
-            case 'editar':
-                $controller->editarTrabajador();
-                break;
-
-            case 'actualizar':
-                $controller->actualizarTrabajador();
-                break;
-
-            case 'eliminar':
-                $controller->eliminarTrabajador();
-                break;
-
-            default:
-                $controller->index();
-                break;
-        }
-        break;
-
-    case 'cosechero':
-        require_once 'controlador/cosecheroController.php';
-        $controller = new CosecheroController();
-        switch ($action) {
-
-            case 'nuevo':
-                $controller->nuevoCosechero();
-                break;
-
-            case 'guardar':
-                $controller->guardarCosechero();
-                break;
-                
-            case 'editar':
-                $controller->editarCosechero();
-                break;
-
-            case 'actualizar':
-                $controller->actualizarCosechero();
-                break;
-
-            case 'eliminar':
-                $controller->eliminarCosechero();
-                break;
-
-            default:
-                $controller->index();
-                break;
-        }
-        break;
-    case 'cdb':
-        require_once 'controlador/cdbController.php';
-        $controller = new CdbController();
-        switch ($action) {
-
-            case 'nuevo':
-                $controller->nuevoCdb();
-                break;
-
-            case 'guardar':
-                $controller->guardarCdb();
-                break;
-                
-            case 'editar':
-                $controller->editarCdb();
-                break;
-
-            case 'actualizar':
-                $controller->actualizarCdb();
-                break;
-
-            case 'eliminar':
-                $controller->eliminarCdb();
-                break;
-
-            default:
-                $controller->index();
-                break;
-        }
-        break;
-        
 
     default:
         http_response_code(404);

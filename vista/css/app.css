@@ -27,3 +27,6 @@ td {
   color: red;
   font-weight: bold;
 }
+.cerrar-sesion {
+  float: right;
+}
