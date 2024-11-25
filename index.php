@@ -2,6 +2,40 @@
 $request = $_GET['m'] ?? ''; // Captura la ruta desde la URL
 $action = $_GET['a'] ?? null; // Captura el id desde la URL, si existe
 
+include_once 'includes/user.php';
+include_once 'includes/user_session.php';
+
+
+$userSession = new UserSession();
+$user = new User();
+
+if(isset($_SESSION['user'])){
+    echo "hay sesion";
+    $user->setUser($userSession->getCurrentUser());
+    include_once 'vista/cosecha/index.php';
+
+}else if(isset($_POST['username']) && isset($_POST['password'])){
+    
+    $userForm = $_POST['username'];
+    $passForm = $_POST['password'];
+
+    $user = new User();
+    if($user->userExists($userForm, $passForm)){
+        echo "Existe el usuario";
+        $userSession->setCurrentUser($userForm);
+        $user->setUser($userForm);
+
+        include_once 'vista/cosecha/index.php';
+    }else{
+        echo "No existe el usuario";
+        $errorLogin = "Nombre de usuario y/o password incorrecto";
+        include_once 'vista/login.php';
+    }
+}else{
+    echo "login";
+    include_once 'vista/login.php';
+}
+
 switch ($request) {
     case '':
     case 'cosecha':
@@ -103,7 +137,7 @@ switch ($request) {
         switch ($action) {
 
             case 'nuevo':
-                $controller->nuevaCosechero();
+                $controller->nuevoCosechero();
                 break;
 
             case 'guardar':

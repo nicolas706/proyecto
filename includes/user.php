@@ -1,5 +1,5 @@
 <?php
-
+include 'includes/db.php';
 class User extends DB{
     private $nombre;
     private $username;

@@ -9,17 +9,16 @@ class DB{
 
     public function __construct(){
         $this->host     = 'localhost';
-        $this->db       = 'compras';
+        $this->db       = 'e-cosecha';
         $this->user     = 'root';
-        $this->password = "123!\"·QWE";
-        $this->charset  = 'utf8mb4';
+        $this->password = "";
     }
 
     function connect(){
     
         try{
             
-            $connection = "mysql:host=" . $this->host . ";dbname=" . $this->db . ";charset=" . $this->charset;
+            $connection = "mysql:host=localhost" . $this->host . ";dbname=e-cosecha" . $this->db;
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_EMULATE_PREPARES   => false,
