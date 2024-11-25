@@ -30,7 +30,13 @@ class cdbController {
             $cosecha_anio = $_POST['cosecha_anio'];
             $cantidad_impresos = $_POST['cantidad_impresos'];
             $cantidad_entregados = $_POST['cantidad_entregados'];
-            echo "Datos recibidos: Año=$cosecha_anio, Impresos=$cantidad_impresos, Entregados=$cantidad_entregados\n"; // Depuración
+    
+            // Depuración: Verificar datos recibidos
+            echo "<pre>";
+            print_r($_POST);
+            echo "</pre>";
+    
+            // Crear instancia del modelo y generar el número aleatorio
             $modelo = new CodigoDeBarras();
             $numero = $modelo->generarNumeroAleatorio();
             $data = [
@@ -39,21 +45,33 @@ class cdbController {
                 'cantidad_impresos' => $cantidad_impresos,
                 'cantidad_entregados' => $cantidad_entregados
             ];
-            echo "Datos a insertar: " . print_r($data, true) . "\n"; // Depuración
+    
+            // Depuración: Mostrar los datos que serán insertados
+            echo "Datos preparados para la inserción:<br>";
+            print_r($data);
+    
+            // Intentar insertar los datos en la base de datos
             $resultado = $modelo->insertar('codigo_de_barras', $data);
+    
             if ($resultado) {
-                echo "Datos insertados correctamente.\n";
-                header("Location: index.php?m=cdb&msg=success");
+                echo "Inserción exitosa.<br>";
+                header("Location: http://localhost/mvc/index.php?m=cdb&msg=success");
+                exit;
             } else {
-                echo "Error al insertar los datos.\n";
-                header("Location: index.php?m=cdb&action=nuevo&msg=error");
+                echo "Error al insertar los datos. Verifica el método `insertar` en el modelo.<br>";
+                // Evitar redirección inmediata para mostrar errores
+                exit;
             }
-            exit;
         } else {
-            echo "Error: Datos incompletos.\n";
-            header("Location: index.php?m=cdb&action=nuevo&msg=missing");
+            echo "Error: Datos incompletos o no enviados correctamente.<br>";
+            echo "Contenido de POST:<br>";
+            print_r($_POST);
+            // Evitar redirección inmediata
+            exit;
         }
     }
+    
+    
     
 
     // Método para mostrar el formulario de edición
