@@ -26,7 +26,7 @@
                 <nav class="menu d-flex d-sm-block justify-content-center- flex-wrap">
                     <a href="#"><i class="bi bi-house"></i><span>DashBoard</span></a>
                     <a href="#"><i class="bi bi-file-earmark"></i><span>Cosechas</span></a>
-                    <a href="#" id="miBoton"><i class="bi bi-file-earmark"></i><span>Personas</span></a>
+                    <a href="#" id="botonPersona"><i class="bi bi-file-earmark"></i><span>Personas</span></a>
                     <a href="#"><i class="bi bi-file-earmark"></i><span>Trabajadores</span></a>
                     <a href="#"><i class="bi bi-file-earmark"></i><span>Codigos de Barra</span></a>
                     <br>
@@ -47,21 +47,25 @@
                                 <input type="text" placeholder="Buscar por Nombre o ID">
                                 <table class="table" id="resultado">
                                     <thead>
-                                      <tr>
-                                        <th scope="col">Personas</th>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Rut</th>
-                                        <th scope="col">Apellidos</th>
-                                      </tr>
+                                      <!--Titulos de la tabla-->
                                     </thead>
                                     <tbody>
                                         <!--La información se genera en esta seccion-->
+                                        <textarea name="" id="vistaInicial" placeholder="LAS CONSULTAS SE MOSTRARAN EN ESTE CUADRO"></textarea>
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-end">
-                                    <button><i class="bi bi-box-arrow-in-right"></i> Eliminar</button>
-                                    <button><i class="bi bi-search"></i> Editar</button>
+                                    <button><i class="bi bi-person-plus"></i> Nuevo Registro</button>
                                 </div>
+                                <form>
+                                    <div action="" id="formularioEdicion">
+                                        <!--Formulario edicion-->
+                                    </div>
+                                    <div id="botonesEdicion" style="display: none;">
+                                        <button id="guardarCambios">Guardar</button>
+                                        <button id="cancelarEdicion">Cancelar</button>
+                                    </div>
+                                </form>
                             </form>
                         </div>
                     </div>

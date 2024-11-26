@@ -93,6 +93,12 @@ body {
     font-weight: 400;
 }
 
+.main .widget form tbody button{
+    width: 80%;
+    padding: 5px;
+    margin: 3px;
+}
+
 .main .widget form textarea {
     height: 400px;
     min-height: 200px;
