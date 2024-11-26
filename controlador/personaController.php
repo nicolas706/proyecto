@@ -38,7 +38,7 @@ class personaController {
                 'telefono' => $telefono
             ];
             $modelo = new Persona();
-            $resultado = $modelo->insertar('persona', $data);
+            $resultado = $modelo->insertar('persona', $data); //LLamado a la función que guarda los datos
             
             if ($resultado) {
                 echo "Datos insertados correctamente.<br>";
@@ -53,7 +53,7 @@ class personaController {
         }
     }
 
-    //nueva
+    //nueva, llamado de la vista
     static function nuevaPersona() {
         require_once("vista/persona/nuevo.php");
     }

@@ -14,7 +14,7 @@ class Persona {
         try {
             $stmt = $this->db->prepare($consulta);
             $stmt->bindParam(':nombre', $data['nombre']);
-            $stmt->bindParam(':apellido_paterno', $data['apellido_paterno']);
+            $stmt->bindParam(':apellido_paterno',$data['apellido_paterno']);
             $stmt->bindParam(':apellido_materno', $data['apellido_materno']);
             $stmt->bindParam(':rut', $data['rut']);
             $stmt->bindParam(':sexo', $data['sexo']);
