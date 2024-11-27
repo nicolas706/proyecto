@@ -10,6 +10,23 @@ class cdbController {
         $this->model = new CodigoDeBarras();
     }
 
+    static function generar() {
+        if (isset($_POST['generateBarcode'])) {
+            $barcodeText = trim($_POST['barcodeText']);
+            $barcodeType = $_POST['barcodeType'];
+            $barcodeDisplay = $_POST['barcodeDisplay'];
+            $barcodeSize = $_POST['barcodeSize'];
+            $printText = $_POST['printText'];
+
+            if ($barcodeText != '') {
+                echo '<h4>Código de Barras:</h4>';
+                echo '<img class="barcode" alt="' . $barcodeText . '" src="barcode.php?text=' . $barcodeText . '&codetype=' . $barcodeType . '&orientation=' . $barcodeDisplay . '&size=' . $barcodeSize . '&print=' . $printText . '"/>';
+            } else {
+                echo '<div class="alert alert-danger">Introduzca el texto para generar el código de barras</div>';
+            }
+        }
+    }
+
     // Método para mostrar la lista de códigos de barras
     static function index() {
         $cdb = new CodigoDeBarras();
@@ -26,8 +43,8 @@ class cdbController {
 
     // Método para guardar un nuevo código de barras
     static function guardarCdb() {
-        if (isset($_POST['cosecha_anio']) && isset($_POST['cantidad_impresos']) && isset($_POST['cantidad_entregados'])) {
-            $cosecha_anio = $_POST['cosecha_anio'];
+        if (isset($_POST['cosecha_id']) && isset($_POST['cantidad_impresos']) && isset($_POST['cantidad_entregados'])) {
+            $cosecha_id = $_POST['cosecha_id'];
             $cantidad_impresos = $_POST['cantidad_impresos'];
             $cantidad_entregados = $_POST['cantidad_entregados'];
     
@@ -40,7 +57,7 @@ class cdbController {
             $modelo = new CodigoDeBarras();
             $numero = $modelo->generarNumeroAleatorio();
             $data = [
-                'cosecha_anio' => $cosecha_anio,
+                'cosecha_id' => $cosecha_id,
                 'numero' => $numero,
                 'cantidad_impresos' => $cantidad_impresos,
                 'cantidad_entregados' => $cantidad_entregados
@@ -90,13 +107,13 @@ class cdbController {
 
     // Método para actualizar un código de barras existente
     static function actualizarCdb() {
-        if (isset($_POST['id']) && isset($_POST['cosecha_anio']) && isset($_POST['numero']) && isset($_POST['cantidad_impresos']) && isset($_POST['cantidad_entregados'])) {
+        if (isset($_POST['id']) && isset($_POST['cosecha_id']) && isset($_POST['numero']) && isset($_POST['cantidad_impresos']) && isset($_POST['cantidad_entregados'])) {
             $id = $_POST['id'];
-            $cosecha_anio = $_POST['cosecha_anio'];
+            $cosecha_id = $_POST['cosecha_id'];
             $numero = $_POST['numero'];
             $cantidad_impresos = $_POST['cantidad_impresos'];
             $cantidad_entregados = $_POST['cantidad_entregados'];
-            $data = "cosecha_anio='$cosecha_anio', numero='$numero', cantidad_impresos='$cantidad_impresos', cantidad_entregados='$cantidad_entregados'";
+            $data = "cosecha_id='$cosecha_id', numero='$numero', cantidad_impresos='$cantidad_impresos', cantidad_entregados='$cantidad_entregados'";
             $modelo = new CodigoDeBarras();
             $resultado = $modelo->actualizar("codigo_de_barras", $data, "id=" . $id);
             

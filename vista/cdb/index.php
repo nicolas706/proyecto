@@ -27,7 +27,6 @@ require_once(__DIR__ . "/../layouts/header.php");
                             <a class="btn" href="index.php?m=cdb&a=eliminar&id=<?php echo $v['id']?>" onclick="return confirm('ESTA SEGURO'); false">ELIMINAR</a>
                         </td>
                     </tr>
-                    <?php echo $v['id']; // Depuración: imprime el ID ?>
                     <?php endforeach; ?>
             <?php else: ?>
                 <tr>

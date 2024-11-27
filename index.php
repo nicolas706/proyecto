@@ -104,37 +104,97 @@ switch ($request) {
         }
         break;
     
-        case 'trabajador':
-            require_once 'controlador/trabajadorController.php';
-            $controller = new trabajadorController();
-            switch ($action) {
-    
-                case 'nuevo':
-                    $controller->nuevaTrabajador();
-                    break;
-    
-                case 'guardar':
-                    $controller->guardarTrabajador();
-                    break;
-                    
-                case 'editar':
-                    $controller->editarTrabajador();
-                    break;
-    
-                case 'actualizar':
-                    $controller->actualizarTrabajador();
-                    break;
-    
-                case 'eliminar':
-                    $controller->eliminarTrabajador();
-                    break;
-    
-                default:
-                    $controller->index();
-                    break;
-            }
-            break;
+    case 'trabajador':
+        require_once 'controlador/trabajadorController.php';
+        $controller = new trabajadorController();
+        switch ($action) {
 
+            case 'nuevo':
+                $controller->nuevaTrabajador();
+                break;
+
+            case 'guardar':
+                $controller->guardarTrabajador();
+                break;
+                
+            case 'editar':
+                $controller->editarTrabajador();
+                break;
+
+            case 'actualizar':
+                $controller->actualizarTrabajador();
+                break;
+
+            case 'eliminar':
+                $controller->eliminarTrabajador();
+                break;
+
+            default:
+                $controller->index();
+                break;
+        }
+        break;
+    case 'cosechero':
+        require_once 'controlador/cosecheroController.php';
+        $controller = new CosecheroController();
+        switch ($action) {
+
+            case 'nuevo':
+                $controller->nuevoCosechero();
+                break;
+
+            case 'guardar':
+                $controller->guardarCosechero();
+                break;
+                
+            case 'editar':
+                $controller->editarCosechero();
+                break;
+
+            case 'actualizar':
+                $controller->actualizarCosechero();
+                break;
+
+            case 'eliminar':
+                $controller->eliminarCosechero();
+                break;
+
+            default:
+                $controller->index();
+                break;
+        }
+        break;
+    case 'cdb':
+        require_once 'controlador/cdbController.php';
+        $controller = new CdbController();
+        switch ($action) {
+
+            case 'nuevo':
+                $controller->nuevoCdb();
+                break;
+
+            case 'guardar':
+                $controller->guardarCdb();
+                break;
+                
+            case 'editar':
+                $controller->editarCdb();
+                break;
+
+            case 'actualizar':
+                $controller->actualizarCdb();
+                break;
+
+            case 'eliminar':
+                $controller->eliminarCdb();
+                break;
+
+            default:
+                $controller->index();
+                break;
+        }
+        break;
+        
 
     default:
         http_response_code(404);
