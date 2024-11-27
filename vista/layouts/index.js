@@ -1,4 +1,4 @@
-//layput inicial al cargar la pagina
+//layout inicial al cargar la pagina
 let tablaInicial = document.getElementById("vistaInicial");
 let boton = document.getElementById("botonPersona");
 //Tabla principal, muestra de registros
@@ -11,11 +11,13 @@ let formularioEdicion = document.getElementById("formularioEdicion");
 let botonesEdicion = document.getElementById("botonesEdicion");
 let guardarCambios = document.getElementById("guardarCambios");
 let cancelarEdicion = document.getElementById("cancelarEdicion");
+//Nuevo Registro
+let botonNuevo = document.getElementById("nuevoRegistro");
 
 //Consulta a la BD
 function cargarDatos(){     
     let datos;
-    fetch('http://localhost/mvc/endPoint/api_mostrar_persona.php?tabla=persona')
+    fetch('http://localhost/mvc/endPoint/api_persona.php?funcion=mostrarPersona')
     .then(response => response.json())
     .then(data => {
         if (data && data.data) {
@@ -117,8 +119,59 @@ function mostrarDatos(datos){
         fila.appendChild(celdaAccion);
         tabla.appendChild(fila);
         });
+    
+    console.log(datosJson);
+    botonNuevo.style.display = "block";
+    botonNuevo.addEventListener('click', () => nuevoRegistro())
 
-        console.log(datosJson);
+}
+
+//Se agrega una nueva fila, se despliega vista
+function nuevoRegistro(){
+    //Se limpia la pantalla
+    tituloTabla.innerHTML = "";
+    tabla.innerHTML = "";
+    botonNuevo.style.display = "none";
+    console.log("nuevo Registro");
+
+    //Tabla de Nuevos registros
+    //Etiqueta nombre
+    const labelNombre = document.createElement("label");
+    labelNombre.textContent = "Nombre";
+    labelNombre.setAttribute("for", "editNombre");
+
+    const inputNombre = document.createElement("input");
+    inputNombre.setAttribute("type", "text");
+    inputNombre.setAttribute("id", "editNombre");
+
+    //Etiqueta rut
+    const labelRut = document.createElement("label");
+    labelRut.textContent = "Rut";
+    labelRut.setAttribute("for", "editRut");
+
+    const inputRut = document.createElement("input");
+    inputRut.setAttribute("type", "text");
+    inputRut.setAttribute("id", "editRut");
+
+    //Etiqueta Apellido
+    const labelApellido = document.createElement("label");
+    labelApellido.textContent = "Apellido";
+    labelApellido.setAttribute("for", "editApellido");
+
+    const inputApellido = document.createElement("input");
+    inputNombre.setAttribute("type", "text");
+    inputNombre.setAttribute("id", "editApellido");
+
+    formularioEdicion.appendChild(labelNombre);
+    formularioEdicion.appendChild(inputNombre);
+
+    formularioEdicion.appendChild(labelRut);
+    formularioEdicion.appendChild(inputRut);
+
+    formularioEdicion.appendChild(labelApellido);
+    formularioEdicion.appendChild(inputApellido);
+
+    botonesEdicion.style.display = "block";
 }
 
 //Se elimina la fila
@@ -194,9 +247,10 @@ function mostrarEdicion(index) {
         formularioEdicion.innerHTML = "";
         mostrarDatos(datosJson);
     })
-}
 
-cancelarEdicion.addEventListener('click', () => {
-    botonesEdicion.style.display = "none";
-    formularioEdicion.innerHTML = "";
-})
+    //Cancelar cambios, funcion anidada
+    cancelarEdicion.addEventListener('click', () => {
+        botonesEdicion.style.display = "none";
+        formularioEdicion.innerHTML = "";
+    })
+}
