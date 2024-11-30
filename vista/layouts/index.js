@@ -1,18 +1,27 @@
 //layout inicial al cargar la pagina
-let tablaInicial = document.getElementById("vistaInicial");
-let boton = document.getElementById("botonPersona");
+const tablaInicial = document.getElementById("vistaInicial");
+const boton = document.getElementById("botonPersona");
 //Tabla principal, muestra de registros
-let tituloTabla = document.getElementById("resultado").querySelector("thead");
-let tabla = document.getElementById("resultado").querySelector("tbody");
+const barraBusqueda = document.getElementById("busqueda");
+const tituloTabla = document.getElementById("resultado").querySelector("thead");
+const tabla = document.getElementById("resultado").querySelector("tbody");
 let datosJson;
 boton.addEventListener('click', cargarDatos);
 //Edicion
 let formularioEdicion = document.getElementById("formularioEdicion");
-let botonesEdicion = document.getElementById("botonesEdicion");
+let botonesEdicion = document.getElementById("botonEdicion");
 let guardarCambios = document.getElementById("guardarCambios");
 let cancelarEdicion = document.getElementById("cancelarEdicion");
 //Nuevo Registro
 let botonNuevo = document.getElementById("nuevoRegistro");
+
+// Función para simplificar la creación de inputs
+function crearInput(type, placeholder) {
+    const input = document.createElement("input");
+    input.setAttribute("type", type);
+    input.setAttribute("placeholder", placeholder);
+    return input;
+}
 
 //Consulta a la BD
 function cargarDatos(){     
@@ -45,7 +54,7 @@ function mostrarDatos(datos){
     //Celda Numero
     let personas = document.createElement("th");
     personas.setAttribute("scope", "col");
-    personas.textContent = "Personas";
+    personas.textContent = "";
     fila.appendChild(personas);
 
     //Celda Nombre
@@ -120,58 +129,75 @@ function mostrarDatos(datos){
         tabla.appendChild(fila);
         });
     
-    console.log(datosJson);
     botonNuevo.style.display = "block";
     botonNuevo.addEventListener('click', () => nuevoRegistro())
 
 }
 
-//Se agrega una nueva fila, se despliega vista
-function nuevoRegistro(){
-    //Se limpia la pantalla
+function nuevoRegistro() {
+    // Limpia la pantalla
     tituloTabla.innerHTML = "";
     tabla.innerHTML = "";
+    console.log("Botón nuevo Registro");
     botonNuevo.style.display = "none";
-    console.log("nuevo Registro");
 
-    //Tabla de Nuevos registros
-    //Etiqueta nombre
-    const labelNombre = document.createElement("label");
-    labelNombre.textContent = "Nombre";
-    labelNombre.setAttribute("for", "editNombre");
+    // Crear inputs dinámicos
+    const inputNombre = crearInput("text", "Ingrese Nombre");
+    const inputRut = crearInput("number", "Ingrese RUT");
+    const inputApellidoPaterno = crearInput("text", "Ingrese Apellido Paterno");
+    const inputApellidoMaterno = crearInput("text", "Ingrese Apellido Materno");
+    const inputSexo = crearInput("text", "Ingrese Sexo");
+    const inputFechaNacimiento = crearInput("date", "Ingrese fecha de nacimiento");
+    const inputTelefono = crearInput("text", "Ingrese teléfono");
 
-    const inputNombre = document.createElement("input");
-    inputNombre.setAttribute("type", "text");
-    inputNombre.setAttribute("id", "editNombre");
-
-    //Etiqueta rut
-    const labelRut = document.createElement("label");
-    labelRut.textContent = "Rut";
-    labelRut.setAttribute("for", "editRut");
-
-    const inputRut = document.createElement("input");
-    inputRut.setAttribute("type", "text");
-    inputRut.setAttribute("id", "editRut");
-
-    //Etiqueta Apellido
-    const labelApellido = document.createElement("label");
-    labelApellido.textContent = "Apellido";
-    labelApellido.setAttribute("for", "editApellido");
-
-    const inputApellido = document.createElement("input");
-    inputNombre.setAttribute("type", "text");
-    inputNombre.setAttribute("id", "editApellido");
-
-    formularioEdicion.appendChild(labelNombre);
-    formularioEdicion.appendChild(inputNombre);
-
-    formularioEdicion.appendChild(labelRut);
-    formularioEdicion.appendChild(inputRut);
-
-    formularioEdicion.appendChild(labelApellido);
-    formularioEdicion.appendChild(inputApellido);
+    // Agregar inputs a la tabla
+    tabla.appendChild(inputNombre);
+    tabla.appendChild(inputRut);
+    tabla.appendChild(inputApellidoPaterno);
+    tabla.appendChild(inputApellidoMaterno);
+    tabla.appendChild(inputSexo);
+    tabla.appendChild(inputFechaNacimiento);
+    tabla.appendChild(inputTelefono);
 
     botonesEdicion.style.display = "block";
+
+    // **Eliminar listeners anteriores**
+    guardarCambios.removeEventListener('click', guardarCambiosHandler);
+    cancelarEdicion.removeEventListener('click', cancelarEdicionHandler);
+
+    // **Añadir nuevos listeners**
+    guardarCambios.addEventListener('click', guardarCambiosHandler);
+    cancelarEdicion.addEventListener('click', cancelarEdicionHandler);
+
+    // Manejador de guardar cambios
+    function guardarCambiosHandler() {
+        console.log("Botón guardar cambios nuevo registro");
+
+        // Crear y guardar nueva persona
+        const nuevaPersona = new Persona(
+            inputNombre.value,
+            inputRut.value,
+            inputApellidoPaterno.value,
+            inputApellidoMaterno.value,
+            inputSexo.value,
+            inputFechaNacimiento.value,
+            inputTelefono.value
+        );
+        solicitudPost(nuevaPersona);
+        console.log("Datos guardados de persona: ", nuevaPersona);
+
+        // Limpiar la pantalla
+        botonesEdicion.style.display = "none";
+        tabla.innerHTML = "";
+        cargarDatos();
+    }
+
+    // Manejador de cancelar edición
+    function cancelarEdicionHandler() {
+        botonesEdicion.style.display = "none";
+        tabla.innerHTML = "";
+        mostrarDatos(datosJson);
+    }
 }
 
 //Se elimina la fila
@@ -183,8 +209,8 @@ function eliminarRegistro(index){
 
 //Despliegue formulario edicion
 function mostrarEdicion(index) {
-    console.log("Boton editar: ", datosJson[index]);
     const registro = datosJson[index];
+    console.log("Boton editar: ", registro);
     //Se limpia la pantalla
     formularioEdicion.innerHTML = "";
     botonesEdicion.style.display = "none";
@@ -208,13 +234,13 @@ function mostrarEdicion(index) {
     inputRut.setAttribute("id", "editRut");
 
     //Etiqueta Apellido
-    const labelApellido = document.createElement("label");
-    labelApellido.textContent = "Apellido";
-    labelApellido.setAttribute("for", "editApellido");
+    const labelApellidoPaterno = document.createElement("label");
+    labelApellidoPaterno.textContent = "Apellido";
+    labelApellidoPaterno.setAttribute("for", "editApellido");
 
-    const inputApellido = document.createElement("input");
-    inputNombre.setAttribute("type", "text");
-    inputNombre.setAttribute("id", "editApellido");
+    const inputApellidoPaterno = document.createElement("input");
+    inputApellidoPaterno.setAttribute("type", "text");
+    inputApellidoPaterno.setAttribute("id", "editApellido");
 
     formularioEdicion.appendChild(labelNombre);
     formularioEdicion.appendChild(inputNombre);
@@ -222,15 +248,16 @@ function mostrarEdicion(index) {
     formularioEdicion.appendChild(labelRut);
     formularioEdicion.appendChild(inputRut);
 
-    formularioEdicion.appendChild(labelApellido);
-    formularioEdicion.appendChild(inputApellido);
+    formularioEdicion.appendChild(labelApellidoPaterno);
+    formularioEdicion.appendChild(inputApellidoPaterno);
 
     inputNombre.value = registro.nombre;
     inputRut.value = registro.rut;
-    inputApellido.value = registro.apellido_paterno;
+    inputApellidoPaterno.value = registro.apellido_paterno;
+
+    const idFila = registro.id;
     
     botonesEdicion.style.display = "block";
-    indiceFila = index;
 
     //Guardar los cambios, funcion anidada
     guardarCambios.addEventListener('click', () => {
@@ -239,8 +266,14 @@ function mostrarEdicion(index) {
             datosJson[index] = {
                 nombre: inputNombre.value,
                 rut: inputRut.value,
-                apellido_paterno: inputApellido.value
+                apellido_paterno: inputApellidoPaterno.value
             }
+            const datosActualizados = `
+            nombre='${inputNombre.value}', 
+            rut='${inputRut.value}', 
+            apellido_paterno='${inputApellidoPaterno.value}'`;
+
+            solicitudUpdate(idFila ,datosActualizados);
         }
 
         botonesEdicion.style.display = "none";
@@ -252,5 +285,63 @@ function mostrarEdicion(index) {
     cancelarEdicion.addEventListener('click', () => {
         botonesEdicion.style.display = "none";
         formularioEdicion.innerHTML = "";
+    })
+}
+
+//Funcion fetch para nuevo registro
+function solicitudPost(datos){
+    fetch ('http://localhost/mvc/endPoint/api_persona.php?funcion=guardarPersona', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+    })
+    .then(response => {
+        if (!response) {
+            throw new Error("Error en la solicitud: ", response.status);
+        }
+        return response.json();
+    })
+    .then(result => {
+        console.log('Respuesta del servidor: ', result);
+    })
+    .catch(error => {
+        console.error("Error: ", error);
+    })
+}
+
+//Funcion fetch para actualizar registro
+function solicitudUpdate(id, datos){
+    data = {
+        tabla: "persona",
+        data: datos,
+        condicion: "id="+id
+    }
+    console.log("Fila editada: ",id, datos)
+    fetch('http://localhost/mvc/endPoint/api_persona.php?funcion=actualizarPersona', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    
+    .then(response => {
+        if (!response) {
+            throw new Error(`Error en la solicitud ${response.status}`);
+        }
+        return response
+    })
+    .then(result => {
+        console.log("Respuesta del servidor: ", result);
+        if(result){
+            alert("Registro actualizado");
+        } else {
+            alert("Error en la solicitud");
+        }
+    })
+    .catch(error => {
+        console.error("Error en la solicitud:", error);
     })
 }
