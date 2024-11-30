@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sesiones</title>
 
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="app.css">
 </head>
 <body>
     <form action="" method="POST">

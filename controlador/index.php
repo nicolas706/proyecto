@@ -103,7 +103,7 @@ switch ($request) {
         switch ($action) {
 
             case 'nuevo':
-                $controller->nuevaCosechero();
+                $controller->nuevoCosechero();
                 break;
 
             case 'guardar':

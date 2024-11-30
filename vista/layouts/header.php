@@ -10,7 +10,10 @@
 <body>
    <div class="panel">
        <h1 class="text-center">E-COSECHA</h1>
-       
+       <li class="cerrar-sesion">
+                <a href="includes/logout.php">Cerrar sesión</a>
+            </li>
+        </ul>   
        <!-- contenido-->
 <!DOCTYPE html>
 <html lang="es">
@@ -27,7 +30,7 @@
                 <li><a  class="btn" name="btn" href="index.php">Cosecha</a></li>
                 <li><a  class="btn" name="btn" href="index.php?m=persona&a=index">Persona</a></li>
                 <li><a  class="btn" name="btn" href="index.php?m=trabajador&a=index">Trabajador</a></li>
-                <li><a  class="btn" name="btn" href="index.php?m=cdb&a=index">Codigo De Barra</a></li>
+                <li><a href="/mvc/vista/tarja/nuevo.php">Ingresar Tarja</a></li>
                 <!-- Agrega más enlaces según sea necesario -->
             </ul>
         </nav>
