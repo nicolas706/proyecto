@@ -50,7 +50,6 @@ try {
     <meta charset="UTF-8">
     <title>Ingresar Tarja</title>
     <script>
-        // Función para cargar variedades según el huerto seleccionado
         async function cargarVariedades() {
             const huertoId = document.getElementById('huerto').value;
 
@@ -66,17 +65,59 @@ try {
                     option.value = variedad.id;
                     option.textContent = variedad.nombre;
                     variedadSelect.appendChild(option);
-
-            });
+                });
+            }
         }
-    }
+
+        async function guardarTarja(event) {
+            event.preventDefault();
+
+            const formData = new FormData(document.getElementById('tarjaForm'));
+            formData.append('action', 'guardar_tarja');
+
+            const response = await fetch('../../controlador/tarjaController.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.text();
+            const tarjaIdMatch = result.match(/Tarja ID: (\d+)/);
+
+            if (tarjaIdMatch && tarjaIdMatch[1]) {
+                const tarjaId = tarjaIdMatch[1];
+                document.getElementById('codigoSection').innerHTML = `
+                    <p>${result}</p>
+                    <label for="codigo_completo">Código Completo:</label>
+                    <input type="text" name="codigo_completo" id="codigo_completo" maxlength="6" required>
+                    <button type="button" onclick="agregarCodigo(${tarjaId})">Agregar Código</button>
+                `;
+            } else {
+                document.getElementById('codigoSection').innerHTML = `<p>${result}</p>`;
+            }
+        }
+
+        async function agregarCodigo(tarjaId) {
+            const codigoCompleto = document.getElementById('codigo_completo').value.padStart(6, '0');
+            const formData = new FormData();
+            formData.append('action', 'agregar_codigo');
+            formData.append('codigo_completo', codigoCompleto);
+            formData.append('tarja_id', tarjaId);
+
+            const response = await fetch('../../controlador/tarjaController.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.text();
+            alert(result);
+        }
     </script>
 </head>
 <body>
     <h1>Ingresar Nueva Tarja</h1>
-    <form action="../../controlador/tarjaController.php" method="POST">
-
-    <label for="codigo">Código Tarja:</label>
+    <form id="tarjaForm" onsubmit="guardarTarja(event)">
+        <!-- Tus campos actuales -->
+        <label for="codigo">Código Tarja:</label>
         <input type="text" name="codigo" id="codigo" required>
         <br>
 
@@ -139,15 +180,17 @@ try {
         </select>
         <br>
 
-
         <label for="total_fisico">Total Físico:</label>
         <input type="number" name="total_fisico" id="total_fisico" required>
         <br>
 
         <button type="submit">Guardar</button>
     </form>
+
+    <div id="codigoSection"></div>
 </body>
 </html>
+
 <?php
 require_once(__DIR__ . "/../layouts/footer.php");
 ?>
