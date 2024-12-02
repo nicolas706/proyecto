@@ -4,6 +4,10 @@ class Trabajador {
     private $db;
     private $datos;
 
+    public function __construct() {
+        $this->Trabajador = array();
+        $this->db = new PDO('mysql:host=localhost;dbname=e-cosecha', "root", "");
+    }
 
     public function mostrarConDetalles() {
         $consulta = "
@@ -30,12 +34,6 @@ class Trabajador {
         }
         return $this->datos;
     }
-    public function __construct() {
-        $this->Trabajador = array();
-        $this->db = new PDO('mysql:host=localhost;dbname=e-cosecha', "root", "");
-    }
-
-    
 
     public function mostrar($tabla, $condicion) {
         $consul = "SELECT * FROM " . $tabla . " WHERE " . $condicion . ";";
@@ -111,8 +109,21 @@ class Trabajador {
             echo "No se encontraron datos en la tabla cosecha";
             return [];
         }
-    
-
         $conexion->close();
+    }
+
+    public function obtenerIdPorCodigo($codigo) {
+        // Prepara la consulta para evitar inyección SQL
+        $stmt = $this->db->prepare("SELECT id FROM trabajador WHERE codigo = :codigo");
+        $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
+    
+        // Ejecuta la consulta
+        $stmt->execute();
+    
+        // Obtiene el resultado
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        // Devuelve el ID del trabajador si se encuentra, de lo contrario, devuelve null
+        return $result ? $result['id'] : null;
     }
 }
