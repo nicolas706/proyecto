@@ -91,6 +91,7 @@ try {
                     <input type="text" name="codigo_completo" id="codigo_completo" maxlength="7" required>
                     <button type="button" onclick="agregarCodigo(${tarjaId})">Agregar Código</button>
                 `;
+                actualizarCodigosRegistrados(tarjaId);
             } else {
                 document.getElementById('codigoSection').innerHTML = `<p>${result}</p>`;
             }

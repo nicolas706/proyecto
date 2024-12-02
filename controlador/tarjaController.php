@@ -1,6 +1,7 @@
 <?php
 require_once '../includes/db.php';
-require_once '../modelo/trabajador.php'; // Asegúrate de incluir el modelo Trabajador
+require_once '../modelo/trabajador.php';
+require_once '../modelo/tarja.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $database = new DB();
@@ -25,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Buscar el trabajador correspondiente
-            $trabajador = new Trabajador();
+            $trabajador = new Trabajador($db);
             $trabajador_id = $trabajador->obtenerIdPorCodigo($codigo_trabajador);
 
             if ($trabajador_id) {
@@ -35,6 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     VALUES (?, ?, ?)
                 ");
                 $stmt->execute([$tarja_id, $trabajador_id, $codigo_completo]);
+
+                // Actualizar la cantidad de códigos registrados en la tarja
+                $tarja = new Tarja($db);
+                $tarja->actualizarCodigosRegistrados($tarja_id);
 
                 echo "Código completo guardado exitosamente.";
             } else {
