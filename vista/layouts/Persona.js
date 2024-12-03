@@ -7,5 +7,12 @@ class Persona {
         this.sexo = sexo;
         this.fecha_de_nacimiento = fecha_de_nacimiento;
         this.telefono = telefono;
+
+        this.columnas = [
+            {clave: 'nombre', titulo: 'Nombre',},
+            {clave: 'apellido_paterno', titulo: 'Apellido Paterno'},
+            {clave: 'rut', titulo: 'Rut'}, 
+            {clave: 'sexo', titulo: 'Sexo'}
+        ]
     }
 }
