@@ -60,7 +60,7 @@ class Trabajador {
         return $resultado['total'] > 0;
     }
     
-}    
+    
 
 
     public static function obtenerTodos() {
