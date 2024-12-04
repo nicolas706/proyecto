@@ -88,16 +88,17 @@ try {
                 document.getElementById('codigoSection').innerHTML = `
                     <p>${result}</p>
                     <label for="codigo_completo">Código Completo:</label>
-                    <input type="text" name="codigo_completo" id="codigo_completo" maxlength="6" required>
+                    <input type="text" name="codigo_completo" id="codigo_completo" maxlength="7" required>
                     <button type="button" onclick="agregarCodigo(${tarjaId})">Agregar Código</button>
                 `;
+                actualizarCodigosRegistrados(tarjaId);
             } else {
                 document.getElementById('codigoSection').innerHTML = `<p>${result}</p>`;
             }
         }
 
         async function agregarCodigo(tarjaId) {
-            const codigoCompleto = document.getElementById('codigo_completo').value.padStart(6, '0');
+            const codigoCompleto = document.getElementById('codigo_completo').value.padStart(7, '0');
             const formData = new FormData();
             formData.append('action', 'agregar_codigo');
             formData.append('codigo_completo', codigoCompleto);
@@ -121,12 +122,8 @@ try {
         <input type="text" name="codigo" id="codigo" required>
         <br>
 
-        <label for="cosecha">Año de Cosecha:</label>
-        <select name="cosecha_id" id="cosecha" required>
-            <?php foreach ($cosechas as $cosecha): ?>
-                <option value="<?= $cosecha['id']; ?>"><?= $cosecha['anio']; ?></option>
-            <?php endforeach; ?>
-        </select>
+        <label for="fecha_cosecha">Fecha de Cosecha:</label>
+        <input type="date" id="fecha_cosecha" value="<?= date('Y-m-d'); ?>" disabled>
         <br>
 
         <label for="carro">Carro:</label>
