@@ -1,40 +1,36 @@
-<?php
-require_once(__DIR__ . "/../layouts/header.php");
-?>
-<h1 class="text-center">LISTA DE TRABAJADORES</h1>
-<a href="index.php?m=trabajador&a=nuevo" class="btn">NUEVO</a>
+<?php require_once(__DIR__ . "/../layouts/header.php"); ?>
+
+<h1 class="text-center">Lista de Trabajadores</h1>
+<a href="index.php?m=trabajador&a=nuevo" class="btn">Nuevo Trabajador</a>
+
 <table>
     <tr>
-        <td>CODIGO</td>
-        <td>NOMBRE DE PERSONA</td>
-        <td>TIPO DE TRABAJO</td>
-        <td>AÑO DE COSECHA</td>
-        <td>ACCIÓN</td>
+        <th>Persona</th>
+        <th>Tipo de Trabajo</th>
+        <th>Año de Cosecha</th>
+        <th>Código</th>
+        <th>Acciones</th>
     </tr>
     <tbody>
-        <?php
-            if(!empty($dato)):
-                foreach($dato as $key => $value)
-                    foreach($value as $v):?>
-                    <tr>
-                        <td><?php echo $v['codigo'] ?> </td>
-                        <td><?php echo $v['persona_nombre'] . ' ' . $v['persona_apellido_paterno'] . ' ' . $v['persona_apellido_materno'] ?> </td>
-                        <td><?php echo $v['tipo_trabajo_nombre'] ?> </td>
-                        <td><?php echo $v['cosecha_año'] ?> </td>
-                        <td>
-                            <a class="btn" href="index.php?m=trabajador&a=editar&id=<?php echo $v['id']?>">EDITAR</a>
-                            <a class="btn" href="index.php?m=trabajador&a=eliminar&id=<?php echo $v['id']?>" onclick="return confirm('ESTA SEGURO'); false">ELIMINAR</a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-            <?php else: ?>
+        <?php if (!empty($dato)): ?>
+            <?php foreach ($dato as $trabajador): ?>
                 <tr>
-                    <td colspan="5">NO HAY REGISTROS</td>
+                    <td><?php echo $trabajador['persona_nombre']; ?></td>
+                    <td><?php echo $trabajador['tipo_trabajo']; ?></td>
+                    <td><?php echo $trabajador['cosecha_anio']; ?></td>
+                    <td><?php echo $trabajador['codigo']; ?></td>
+                    <td>
+                        <a href="index.php?m=trabajador&a=editar&id=<?php echo $trabajador['id']; ?>" class="btn">Editar</a>
+                        <a href="index.php?m=trabajador&a=eliminar&id=<?php echo $trabajador['id']; ?>" class="btn" onclick="return confirm('¿Estás seguro de eliminar este trabajador?');">Eliminar</a>
+                    </td>
                 </tr>
-            <?php endif ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="5">No hay registros</td>
+            </tr>
+        <?php endif; ?>
     </tbody>
 </table>
-<?php
-require_once(__DIR__ . "/../layouts/footer.php");
-?>
 
+<?php require_once(__DIR__ . "/../layouts/footer.php"); ?>
