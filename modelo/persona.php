@@ -47,46 +47,32 @@ class Persona {
     }
 
     public function eliminar($tabla, $condicion) {
-        // Eliminar registros dependientes en la tabla trabajador
-        $condicionTrabajador = "persona_id IN (SELECT id FROM " . $tabla . " WHERE " . $condicion . ")";
-        $eliTrabajador = "DELETE FROM trabajador WHERE " . $condicionTrabajador;
-        try {
-            $stmtTrabajador = $this->db->prepare($eliTrabajador);
-            $stmtTrabajador->execute();
-        } catch (PDOException $e) {
-            echo "Error al eliminar registros dependientes: " . $e->getMessage() . "<br>";
-            return false;
-        }
-    
-        // Eliminar el registro en la tabla persona
         $eli = "DELETE FROM " . $tabla . " WHERE " . $condicion;
         try {
-            $stmt = $this->db->prepare($eli);
-            $result = $stmt->execute();
-            if ($result) {
-                echo "Registro eliminado correctamente.<br>";
-            } else {
-                echo "Error al eliminar el registro.<br>";
-            }
-            return $result;
+            return $this->db->query($eli);
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage() . "<br>";
+            echo "Error: " . $e->getMessage();
             return false;
         }
     }
 
     public static function obtenerTodas() {
-        $conexion = new mysqli("localhost", "root", "", "e-cosecha");
+        // Código para conectar con la base de datos y obtener todas las cosechas
+        $conexion = new mysqli("localhost","root","","e-cosecha");
         if ($conexion->connect_error) {
             die("Error de conexión: " . $conexion->connect_error);
         }
-        $consulta = "SELECT id, nombre, apellido_paterno, apellido_materno FROM persona";
+        $consulta = "SELECT * FROM persona";
         $resultado = $conexion->query($consulta);
-        if ($resultado && $resultado->num_rows > 0) {
+        if ($resultado->num_rows > 0) {
             $datos = $resultado->fetch_all(MYSQLI_ASSOC);
             return $datos;
         } else {
+            echo "No se encontraron datos en la tabla cosecha";
             return [];
         }
-    }
+
+        $conexion->close();
+        }
+    
 }

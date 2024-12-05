@@ -31,6 +31,7 @@
                 <li><a  class="btn" name="btn" href="index.php?m=persona&a=index">Persona</a></li>
                 <li><a  class="btn" name="btn" href="index.php?m=trabajador&a=index">Trabajador</a></li>
                 <li><a href="/mvc/vista/tarja/nuevo.php">Ingresar Tarja</a></li>
+                <li><a href="index.php?m=trabajador&a=cajas" class="btn">Ver Listado de Cosecheros</a></li>
                 <!-- Agrega más enlaces según sea necesario -->
             </ul>
         </nav>

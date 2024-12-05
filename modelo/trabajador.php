@@ -96,4 +96,51 @@ class Trabajador {
         return $result ? $result['id'] : null;
     }
 
+    public function obtenerCajasTotales() {
+        $consulta = "
+        SELECT 
+            trabajador.id AS trabajador_id,
+            CONCAT(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS nombre_completo,
+            COUNT(caja_cosechero.id) AS total_cajas
+            FROM 
+            caja_cosechero
+            JOIN 
+            trabajador ON caja_cosechero.trabajador_id = trabajador.id
+            JOIN 
+            persona ON trabajador.persona_id = persona.id
+            GROUP BY 
+            trabajador.id";
+    
+        $stmt = $this->db->prepare($consulta);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public function obtenerCajasPorTrabajador($fecha = null) {
+        $consulta = "
+        SELECT 
+                        CONCAT(p.nombre, ' ', p.apellido_paterno, ' ', p.apellido_materno) AS nombre_completo, 
+                        COUNT(c.id) AS total_cajas 
+                     FROM trabajador t
+                     JOIN persona p ON t.persona_id = p.id
+                     JOIN caja_cosechero c ON t.id = c.trabajador_id";
+    
+        if ($fecha) {
+            $consulta .= " WHERE DATE(c.created_at) = :fecha";
+        }
+    
+        $consulta .= " GROUP BY t.id";
+    
+        $stmt = $this->db->prepare($consulta);
+    
+        if ($fecha) {
+            $stmt->bindParam(':fecha', $fecha);
+        }
+    
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    
+
 }

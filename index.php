@@ -108,7 +108,6 @@ switch ($request) {
         require_once 'controlador/trabajadorController.php';
         $controller = new trabajadorController();
         switch ($action) {
-
             case 'nuevo':
                 $controller->nuevaTrabajador();
                 break;
@@ -129,12 +128,16 @@ switch ($request) {
                 $controller->eliminarTrabajador();
                 break;
 
+            case 'cajas': // Acción para listar cajas por trabajador
+                $controller->listarCajasPorTrabajador($_GET['fecha'] ?? null);
+                break;
+
             default:
                 $controller->index();
                 break;
         }
         break;
-        
+
     default:
         http_response_code(404);
         echo "404 - Página no encontrada";

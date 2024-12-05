@@ -114,6 +114,14 @@ static function eliminarTrabajador() {
         echo "Error: ID no proporcionado o inválido.";
     }
 }
+public function listarCajasPorTrabajador($fecha = null) {
+    $trabajador = new Trabajador(); // Instancia del modelo Trabajador
+    $dato = $trabajador->obtenerCajasPorTrabajador($fecha); // Método para obtener los datos
+    require_once(__DIR__ . "/../vista/trabajador/cajas.php"); // Ahora apunta a 'cajas.php'
+}
+
+
+
 
     
 }

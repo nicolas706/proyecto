@@ -90,6 +90,9 @@ switch ($request) {
             case 'eliminar':
                 $controller->eliminarTrabajador();
                 break;
+            case 'cajas':
+                $controlador->listarCajasPorTrabajador($_GET['fecha'] ?? null);
+                break;
 
             default:
                 $controller->index();
