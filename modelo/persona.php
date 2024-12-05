@@ -47,11 +47,30 @@ class Persona {
     }
 
     public function eliminar($tabla, $condicion) {
+        // Eliminar registros dependientes en la tabla trabajador
+        $condicionTrabajador = "persona_id IN (SELECT id FROM " . $tabla . " WHERE " . $condicion . ")";
+        $eliTrabajador = "DELETE FROM trabajador WHERE " . $condicionTrabajador;
+        try {
+            $stmtTrabajador = $this->db->prepare($eliTrabajador);
+            $stmtTrabajador->execute();
+        } catch (PDOException $e) {
+            echo "Error al eliminar registros dependientes: " . $e->getMessage() . "<br>";
+            return false;
+        }
+    
+        // Eliminar el registro en la tabla persona
         $eli = "DELETE FROM " . $tabla . " WHERE " . $condicion;
         try {
-            return $this->db->query($eli);
+            $stmt = $this->db->prepare($eli);
+            $result = $stmt->execute();
+            if ($result) {
+                echo "Registro eliminado correctamente.<br>";
+            } else {
+                echo "Error al eliminar el registro.<br>";
+            }
+            return $result;
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            echo "Error: " . $e->getMessage() . "<br>";
             return false;
         }
     }
