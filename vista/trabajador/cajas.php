@@ -10,6 +10,9 @@
     <button type="submit">Filtrar</button>
 </form>
 
+<!-- Enlace para descargar el archivo Excel -->
+<a href="controlador/descargarCajas.php?fecha=<?php echo htmlspecialchars($_GET['fecha'] ?? ''); ?>" class="btn">Descargar en Excel</a>
+
 <!-- Tabla de resultados -->
 <table>
     <thead>
