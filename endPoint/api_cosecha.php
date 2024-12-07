@@ -47,6 +47,10 @@ try {
         case 'actualizarCosecha':
             actualizarcosecha($cosecha);
             break;
+        
+        case 'eliminarCosecha':
+            eliminarCosecha($cosecha);
+            break;
 
         default:
             echo json_encode([
@@ -97,10 +101,7 @@ function guardarCosecha($cosecha) {
         $data = json_decode($json, true);
 
         // Verificar si los datos son válidos
-        if (!isset($data['nombre']) || !isset($data['apellido_paterno']) || 
-            !isset($data['apellido_materno']) || !isset($data['rut']) || 
-            !isset($data['sexo']) || !isset($data['fecha_de_nacimiento']) || 
-            !isset($data['telefono'])) {
+        if (!isset($data['anio']) || !isset($data['detalle']) || !isset($data['activa'])) {
             echo json_encode([
                 'success' => false,
                 'message' => 'Datos incompletos para insertar.'
@@ -109,18 +110,18 @@ function guardarCosecha($cosecha) {
         }
 
         // Insertar los datos en la base de datos
-        $resultado = $cosecha->insertar("cosecha$cosecha", $data);
+        $resultado = $cosecha->insertar("cosecha", $data);
 
         // Verificar si la operación fue exitosa
         if ($resultado) {
             echo json_encode([
                 'success' => true,
-                'message' => 'cosecha$cosecha guardada exitosamente.'
+                'message' => 'cosecha guardada exitosamente.'
             ]);
         } else {
             echo json_encode([
                 'success' => false,
-                'message' => 'No se pudo guardar la cosecha$cosecha.'
+                'message' => 'No se pudo guardar la cosecha.'
             ]);
         }
 
@@ -168,5 +169,50 @@ function actualizarCosecha($cosecha) {
             'message' => $e->getMessage()
         ]);
         error_log("Error en el endpoint: " . $e->getMessage());
+    }
+}
+
+function eliminarCosecha($cosecha) {
+    try {
+        // Leer los datos JSON enviados al endpoint
+        $json = file_get_contents('php://input');
+        $inputData = json_decode($json, true);
+
+        // Validar los datos recibidos
+        if (!isset($inputData['tabla']) || !isset($inputData['condicion'])) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Datos incompletos para eliminar.'
+            ]);
+            return;
+        }
+
+        // Llamar al modelo para realizar la eliminación
+        $resultado = $cosecha->eliminar(
+            $inputData['tabla'], 
+            $inputData['condicion']
+        );
+
+        // Validar el resultado
+        if ($resultado) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Registro eliminado exitosamente.'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No se eliminó ningún registro.'
+            ]);
+        }
+    } catch (Exception $error) {
+        // Manejar errores y devolverlos en formato JSON
+        echo json_encode([
+            'success' => false,
+            'message' => 'Error en el servidor: ' . $error->getMessage()
+        ]);
+
+        // Registrar el error en el log del servidor
+        error_log("Error en el endpoint: " . $error->getMessage());
     }
 }

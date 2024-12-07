@@ -4,7 +4,10 @@ class Trabajador {
     private $db;
     private $datos;
 
-
+    public function __construct() {
+        $this->Trabajador = array();
+        $this->db = new PDO('mysql:host=localhost;dbname=e-cosecha', "root", "");
+    }
     public function mostrarConDetalles() {
         $consulta = "
             SELECT 
@@ -30,12 +33,6 @@ class Trabajador {
         }
         return $this->datos;
     }
-    public function __construct() {
-        $this->Trabajador = array();
-        $this->db = new PDO('mysql:host=localhost;dbname=e-cosecha', "root", "");
-    }
-
-    
 
     public function mostrar($tabla, $condicion) {
         $consul = "SELECT * FROM " . $tabla . " WHERE " . $condicion . ";";

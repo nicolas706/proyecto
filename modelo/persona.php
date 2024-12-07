@@ -45,9 +45,8 @@ class Persona {
             return false;
         }
     }
-
     public function eliminar($tabla, $condicion) {
-        $eli = "DELETE FROM " . $tabla . " WHERE " . $condicion;
+        $eli = "DELETE FROM " . $tabla . " WHERE ". $condicion;
         try {
             return $this->db->query($eli);
         } catch (PDOException $e) {

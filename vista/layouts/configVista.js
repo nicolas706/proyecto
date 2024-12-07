@@ -3,6 +3,8 @@ function mostrarDatos(datos, columnas) {
     //Se limpia la tabla
     tabla.innerHTML = "";
     tituloTabla.innerHTML = "";
+    tablaTarjas.innerHTML = "";
+    botonNuevo.style.display = "block";
     //Se crea cabecera, para los respectivos titulos
     const cabecera = document.createElement("tr");
 
@@ -125,12 +127,13 @@ function mostrarEdicion(index, datosJson, columnas) {
 }
 
 //Formulario genérico para nuevo registro
-function nuevoRegistro(columna, cargarDatosHandler) {
+function nuevoRegistro(tablaConsultada) {
+    botonNuevo.style.display = "block";
     // Obtén la configuración de la columna desde configcolumnaes
-    const config = configcolumnaes[columna];
+    const config = configEntidades[tablaConsultada];
 
     if (!config) {
-        console.error(`No se encontró configuración para la columna: ${columna}`);
+        console.error(`No se encontró configuración para la columna: ${tablaConsultada}`);
         return;
     }
 
@@ -138,7 +141,7 @@ function nuevoRegistro(columna, cargarDatosHandler) {
     tituloTabla.innerHTML = "";
     tabla.innerHTML = "";
     botonNuevo.innerHTML = "";
-    console.log(`Creando nuevo registro para: ${columna}`);
+    console.log(`Creando nuevo registro para: ${tablaConsultada}`);
 
     // Crear inputs dinámicos en base a las columnas configuradas
     config.columnas.forEach(columna => {
@@ -147,7 +150,7 @@ function nuevoRegistro(columna, cargarDatosHandler) {
         label.setAttribute("for", columna.clave);
 
         const input = document.createElement("input");
-        input.setAttribute("type", columna.tipo || "text"); // Default "text" si no se especifica tipo
+        input.setAttribute("type", columna.clave === 'fecha_de_nacimiento' ? 'date' : (columna.tipo || "text"));
         input.setAttribute("id", columna.clave);
         input.placeholder = `Ingrese ${columna.titulo.toLowerCase()}`;
 
@@ -173,7 +176,7 @@ function nuevoRegistro(columna, cargarDatosHandler) {
 
     // Manejador para guardar los cambios
     function guardarCambiosHandler() {
-        console.log(`Guardando nuevo registro para: ${columna}`);
+        console.log(`Guardando nuevo registro para: ${tablaConsultada}`);
 
         // Crear un objeto dinámico con los valores de los inputs
         const nuevoRegistro = {};
@@ -183,19 +186,20 @@ function nuevoRegistro(columna, cargarDatosHandler) {
         });
 
         // Enviar los datos mediante la función proporcionada
-        solicitudPost(nuevoRegistro, apiConsultada, funcionPost);
+        solicitudPost(nuevoRegistro, apiConsultada, funcionCreate);
         console.log("Datos guardados: ", nuevoRegistro);
+        console.log("Se recomienda volver a consultar la tabla");
 
         // Limpiar pantalla y recargar datos
         botonesEdicion.style.display = "none";
         tabla.innerHTML = "";
-        cargarDatosHandler(columna);
+        mostrarDatos(datosJson, config.columnas);
     }
 
     // Manejador para cancelar la edición
     function cancelarEdicionHandler() {
         botonesEdicion.style.display = "none";
         tabla.innerHTML = "";
-        cargarDatosHandler(columna);
+        mostrarDatos(datosJson, config.columnas);
     }
 }

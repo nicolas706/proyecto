@@ -33,7 +33,6 @@ function solicitudUpdate(id, datos, tabla, api, funcion){
         },
         body: JSON.stringify(data)
     })
-    
     .then(response => {
         if (!response) {
             throw new Error(`Error en la solicitud ${response.status}`);
@@ -52,34 +51,66 @@ function solicitudUpdate(id, datos, tabla, api, funcion){
         console.error("Error en la solicitud:", error);
     })
 }
-/*
+
+
+//Funcion fetch para nuevo registro
+function solicitudPost(datos, apiConsultada, funcion){
+    console.log(`Datos enviados: ${datos}`);
+    console.log(`Api consultada: ${apiConsultada} y funcion llamada: ${funcion}`);
+    fetch (`http://localhost/mvc/endPoint/${apiConsultada}.php?funcion=${funcion}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+    })
+    .then(response => {
+        if (!response) {
+            throw new Error("Error en la solicitud: ", response.status);
+        }
+        return response.json();
+    })
+    .then(result => {
+        console.log('Respuesta del servidor: ', result);
+        alert("Nuevo registro Creado, se recomienda volver a consultar la tabla")
+    })
+    .catch(error => {
+        console.error("Error: ", error);
+    })
+}
+
 function solicitudDelate(api, id){
-    //console.log(`Solicutud delete, se rescata la api consultada: ${api} y el id de la fila ${id}`);
+    console.log(`Solicutud delete, se rescata la api consultada: ${api} y el id de la fila ${id}`);
+    console.log(`Se convonca a la funcion: ${funcionDelete} y a la tabla ${tablaConsultada}`)
     data = {
         tabla: tablaConsultada,
         condicion: "id="+id
     }
     //fetch delate
-    if (confirm("¿Estás seguro que deseas eliminar este registro?")) {
+    //if (confirm("¿Estás seguro que deseas eliminar este registro?")) {
         fetch(`http://localhost/mvc/endPoint/${api}.php?funcion=${funcionDelete}`, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
         })
-    .then(response => response.json())
-    .then(result => {
-        console.log("Resultado:", result);
-        if (result.success) {
-            alert("Registro eliminado exitosamente.");
-        } else {
-            alert("Error: " + result.message);
-        }
-    })
-    .catch(error => {
-        console.error("Error en el fetch:", error);
-    })
-    }
-    cargarPersona();
-}*/
+        .then(response => {
+            if (!response) {
+                throw new Error(`Error en la solicitud ${response.status}`);
+            }
+            return response
+        })
+        .then(result => {
+            console.log("Respuesta del servidor: ", result);
+            if(result){
+                alert("Registro actualizado");
+            } else {
+                alert("Error en la solicitud");
+            }
+        })
+        .catch(error => {
+            console.error("Error en la solicitud:", error);
+        })
+   // }
+}

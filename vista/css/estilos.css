@@ -23,7 +23,7 @@ body {
 }
 /*ICONOS*/
 .barra-lateral .logo {
-    background-color: #0275db;
+    background-color: #072c4d;
     margin-bottom: 2px;
 }
 
@@ -93,12 +93,6 @@ body {
     font-weight: 400;
 }
 
-.main .widget form tbody button{
-    width: 80%;
-    padding: 5px;
-    margin: 3px;
-}
-
 .main .widget form textarea {
     height: 400px;
     min-height: 200px;
@@ -106,8 +100,44 @@ body {
     max-width: 100%;
 }
 
+#formularioTarjas {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.main .widget form label {
+    font-size: 16px;
+    color: #333; /* Gris oscuro para el texto */
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.main .widget form input,
+.main .widget form select {
+    padding: 10px;
+    font-size: 14px;
+    color: #555; /* Texto gris medio */
+    border: 1px solid #ccc; /* Borde gris */
+    border-radius: 5px;
+    outline: none; /* Quitar borde azul al enfocar */
+    transition: border-color 0.3s ease; /* Animación al enfocar */
+}
+
+.main .widget form input:focus,
+.main .widget form select:focus {
+    border-color: #888; /* Gris más oscuro al enfocar */
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Sombra al enfocar */
+} 
+
+.main .widget form button{
+    width: 80%;
+    padding: 5px;
+    margin: 3px;
+}
+
 .main .widget form button {
-    background: #0275d8;
+    background-color: #444; /* Fondo gris oscuro */
     cursor: pointer;
     color: #fff;
     font-family: 'Roboto', sans-serif;
