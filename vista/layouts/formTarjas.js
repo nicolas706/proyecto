@@ -1,4 +1,4 @@
-// Función auxiliar para crear un label y un input  
+//Se recojen los elementos y se declaran variables para la tabla variedad
 let idHuerto;
 let opcionVariedad = document.createElement("option");
 opcionVariedad.textContent = "Seleccione un huerto primero";
@@ -8,6 +8,7 @@ inputVariedad.id = "variedadId";
 inputVariedad.name = "variedades";
 inputVariedad.required = true;
 
+// Función auxiliar para crear un label y un input  
 function crearCampo(labelText, inputId, inputType, placeholder) {
 
     const label = document.createElement("label");
@@ -27,6 +28,7 @@ function crearCampo(labelText, inputId, inputType, placeholder) {
     return input;
 }
 
+// Función auxiliar para crear un label y un select respectivo para cada campo  
 function crearSelect(labelText, selectId, key, filas, campo){
     const label = document.createElement("label");
     label.textContent = labelText;
@@ -35,8 +37,10 @@ function crearSelect(labelText, selectId, key, filas, campo){
     const input = document.createElement("select");
     input.id = selectId;
     input.name = key;
+    input.setAttribute('class', "selectTarja");
     input.required = true;
-
+    
+    //Para cada tabla se generan los labels y opciones para el select respectivos
     switch (campo){
         //case "huerto":
         case "variedad":
@@ -123,13 +127,15 @@ function crearSelect(labelText, selectId, key, filas, campo){
     }
 }
 
+//Función con el fetch a la base de datos
 async function formularioTarja(){
+    //Se limpia la pantalla
     tablaInicial.style.display = "none";
     tituloTabla.innerHTML = "";
     tablaTarjas.innerHTML = "";
     tabla.innerHTML = "";
-    botonNuevo.style.display = "none";
-    //console.log("Botón Formulario de Tarjas");
+    botonNuevo.innerHTML = "";
+    botonesEdicion.innerHTML = "";
 
     try {
         const response = await fetch("http://localhost/mvc/endPoint/api_tarja.php");
@@ -188,6 +194,17 @@ async function formularioTarja(){
             const guardar = document.createElement("button");
             guardar.textContent = "Guardar";
             guardar.setAttribute("id", "enviarForm");
+            guardar.addEventListener('click', () => {
+                const selects = document.querySelectorAll('.selectTarja');
+                const registros = [];
+
+                selects.forEach(select => {
+                    registros.push(select.value);
+                });
+
+                console.log(registros);
+                alert("Registro guardado exitosamente", registros);
+            })
             tablaTarjas.appendChild(guardar);
             }
     } catch(error){

@@ -28,13 +28,10 @@ class Persona {
     }
 
     public function mostrar($tabla, $condicion) {
-        $consul = "SELECT * FROM " . $tabla . " WHERE " . $condicion . ";";
-        $resu = $this->db->query($consul);        
-        while ($filas = $resu->fetchAll(PDO::FETCH_ASSOC)) {
-            $this->datos[] = $filas;
-        }
-        return $this->datos;
-    } 
+        $consulta = "SELECT * FROM $tabla WHERE $condicion";
+        $resultado = $this->db->query($consulta);
+        return $resultado->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function actualizar($tabla, $data, $condicion) {       
         $consulta = "UPDATE " . $tabla . " SET " . $data . " WHERE " . $condicion;

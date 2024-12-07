@@ -4,8 +4,8 @@ async function solicitudGet(api, funcionConvocada) {
         const response = await fetch(`http://localhost/mvc/endPoint/${api}.php?funcion=${funcionConvocada}`);
         const data = await response.json();
         if (data && data.data) {
-            //console.log("Datos obtenidos, consulta get:", data.data[0]);
-            return data.data[0]; // Retorna los datos obtenidos
+            //console.log("Datos obtenidos, consulta get:", data.data);
+            return data.data; // Retorna los datos obtenidos
         } else {
             console.error("Error: ", data.message);
             return null;

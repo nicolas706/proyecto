@@ -4,8 +4,12 @@ function mostrarDatos(datos, columnas) {
     tabla.innerHTML = "";
     tituloTabla.innerHTML = "";
     tablaTarjas.innerHTML = "";
-    botonNuevo.style.display = "block";
+    botonNuevo.innerHTML = "";
     //Se crea cabecera, para los respectivos titulos
+    const botonNuevoRegistro = document.createElement("button");
+    botonNuevoRegistro.textContent = "Nuevo Registro";
+    botonNuevo.appendChild(botonNuevoRegistro);
+    console.log("Datos ingresados a mostrarDatos: ", datos);
     const cabecera = document.createElement("tr");
 
     //Se agregan los titulos
@@ -63,6 +67,7 @@ function mostrarEdicion(index, datosJson, columnas) {
     // Limpia la pantalla
     formularioEdicion.innerHTML = "";
     botonesEdicion.innerHTML = "";
+    botonNuevo.innerHTML = "";
 
     // Crear los campos dinámicamente según las columnas
     const inputs = {}; // Para almacenar referencias a los inputs generados
@@ -128,7 +133,7 @@ function mostrarEdicion(index, datosJson, columnas) {
 
 //Formulario genérico para nuevo registro
 function nuevoRegistro(tablaConsultada) {
-    botonNuevo.style.display = "block";
+    botonNuevo.innerHTML = "";
     // Obtén la configuración de la columna desde configcolumnaes
     const config = configEntidades[tablaConsultada];
 

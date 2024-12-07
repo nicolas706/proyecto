@@ -32,10 +32,10 @@ const configEntidades = {
 
         columnas: [
             {clave: 'id', titulo: 'ID'},
-            {clave: 'cosecha_id', titulo: 'ID de cosecha'},
-            {clave: 'tipo_trabajo_id', titulo: 'ID del tipo Trabajo'},
-            {clave: 'persona_id', titulo: 'ID de la persona'},
-            {clave: 'codigo', titulo: 'Codigo relaciona'}
+            {clave: 'persona_nombre', titulo: 'Nombre'},
+            {clave: 'tipo_trabajo', titulo: 'Tipo de Trabajo'},
+            {clave: 'cosecha_anio', titulo: 'Año de Cosecha'},
+            {clave: 'codigo', titulo: 'Codigo'}
         ]        
     }
 }

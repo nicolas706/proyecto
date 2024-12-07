@@ -23,23 +23,10 @@ class Cosecha {
         }
     }
     
-    
-    
-    
-
     public function mostrar($tabla, $condicion) {
-        $consul = "SELECT * FROM " . $tabla . " WHERE " . $condicion . ";";
-        try {
-            $resu = $this->db->query($consul);
-            $this->datos = [];
-            while ($filas = $resu->fetchAll(PDO::FETCH_ASSOC)) {
-                $this->datos[] = $filas;
-            }
-            return $this->datos;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
+        $consulta = "SELECT * FROM $tabla WHERE $condicion";
+        $resultado = $this->db->query($consulta);
+        return $resultado->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function actualizar($tabla, $data, $condicion) {       

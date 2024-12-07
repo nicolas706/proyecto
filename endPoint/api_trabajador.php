@@ -71,7 +71,7 @@ try {
 function mostrarTrabajador($trabajador, $condicion) {
     try {
         //Se llama al método 'mostrar' para obtener los datos, encontrado en el modelo
-        $datos = $trabajador->mostrar("trabajador", $condicion);
+        $datos = $trabajador->mostrarConDetalles();
 
         // Devolver los datos como JSON
         echo json_encode([

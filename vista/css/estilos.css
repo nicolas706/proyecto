@@ -130,12 +130,6 @@ body {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Sombra al enfocar */
 } 
 
-.main .widget form button{
-    width: 80%;
-    padding: 5px;
-    margin: 3px;
-}
-
 .main .widget form button {
     background-color: #444; /* Fondo gris oscuro */
     cursor: pointer;
@@ -146,10 +140,15 @@ body {
     border: none;
     display: inline-block;
     padding: 10px;
-    width: 200px;
+    margin: 3px;
+    width: 80%;
     border-radius: 10px;
-    margin-right: 15px;
     transition: all .3s ease;
+}
+
+#nuevoRegistro,
+#botonEdicion button {
+    width: 30%;
 }
 
 .main .widget form button:hover {
