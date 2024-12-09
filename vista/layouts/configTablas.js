@@ -57,7 +57,7 @@ const configEntidades = {
         columnas:[
             //{clave: 'tarja_id', titulo: 'ID de la Tarja'},
             {clave: 'nombre_cosechero', titulo: 'Nombre Completo'},
-            {clave: 'cantidad_cajas', titulo: 'Cantidad de Cajas en la Tarja'}
+            {clave: 'cantidad_cajas', titulo: 'Total de Cajas'}
         ]
     }
 }

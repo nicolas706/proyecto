@@ -337,9 +337,38 @@ async function vistaTarja(index, parametros){
         
         formularioEdicion.appendChild(tablaCosechero);
 
-
-
     } catch(error){
         console.log("Error en lo solicitud:", error)
     }
+}
+
+
+function consultaExcel(){
+    fetch('http://localhost/mvc/endPoint/api_excel.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            fecha: '' // Cambiar por la fecha deseada
+        }),
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            // Descargar el archivo Excel
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'listado_cajas_por_trabajador.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        })
+        .catch(error => console.error('Error:', error));
+    
 }

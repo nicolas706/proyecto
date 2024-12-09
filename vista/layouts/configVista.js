@@ -5,7 +5,10 @@ function mostrarDatos(datos, columnas, value) {
     tituloTabla.innerHTML = "";
     tablaTarjas.innerHTML = "";
     botonNuevo.innerHTML = "";
+    botonesEdicion.innerHTML = "";
     formularioEdicion.innerHTML = "";
+
+
     //Se crea cabecera, para los respectivos titulos
     const botonNuevoRegistro = document.createElement("button");
     botonNuevoRegistro.textContent = "Nuevo Registro";
@@ -40,7 +43,7 @@ function mostrarDatos(datos, columnas, value) {
 
         const celdaAccion = document.createElement("td");
 
-        if(value == "tarjas") {
+        if(value == "tarjas"||value =="total_cajas") {
             // Botón Editar
             const consultaTarja = document.createElement("button");
             consultaTarja.textContent = "Ver Detalles";

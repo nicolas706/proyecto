@@ -10,6 +10,8 @@ const formularioEdicion = document.getElementById("formularioEdicion");
 const botonesEdicion = document.getElementById("botonEdicion");
 //Nuevo Registro
 const botonNuevo = document.getElementById("nuevoRegistro");
+
+botonNuevo.addEventListener('click', () => {nuevoRegistro(tablaConsultada)});
 //Variables para manejar los datos
 let datosJson;
 let tablaConsultada;
@@ -18,8 +20,6 @@ let funcionCreate;
 let funcionGet;
 let funcionPost;
 let funcionDelete;
-
-botonNuevo.addEventListener('click', () => {nuevoRegistro(tablaConsultada)});
 
 //Consulta a la BD
 async function cargarPersona(){
@@ -59,4 +59,41 @@ async function cargarTrabajador() {
     tablaInicial.style.display = "none";
     mostrarDatos(datosJson, configEntidades.trabajador.columnas);
     //console.log(datosJson);
+}
+
+async function cargarCajas() {
+    //Se limpia la pantalla
+    tablaInicial.style.display = "none";
+    tituloTabla.innerHTML = "";
+    tablaTarjas.innerHTML = "";
+    tabla.innerHTML = "";
+    botonNuevo.innerHTML = "";
+    botonesEdicion.innerHTML = "";
+    formularioEdicion.innerHTML = "";
+
+    try {
+        const response = await fetch("http://localhost/mvc/endPoint/api_tarja.php?funcion=mostrarDatos");
+        const result = await response.json();
+
+        if (!result.success) {
+            console.error("Error en el servidor:", result.message);
+            return;
+        }
+
+        if (result){
+            tablaConsultada = 'total_cajas';
+            datosJson = result;
+            console.log(datosJson);
+            mostrarDatos(result.data.total_cajas, configEntidades.cosecheros.columnas, "total_cajas");
+            botonNuevo.innerHTML = "";
+
+            const botonDescargar = document.createElement("button");
+            botonDescargar.textContent = "Descargar Excel";
+
+            botonDescargar.addEventListener('click', consultaExcel)
+            botonesEdicion.appendChild(botonDescargar);
+        }
+    } catch(error){
+        console.log("Error en lo solicitud:", error)
+    }
 }

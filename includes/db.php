@@ -1,9 +1,9 @@
 <?php
 class DB {
-    private $host = "localhost";
-    private $user = "root";
-    private $password = "";
-    private $dbname = "e-cosecha";
+    private $host = "localhost"; // Dirección del servidor de base de datos
+    private $user = "root";      // Usuario de la base de datos
+    private $password = "";      // Contraseña del usuario
+    private $dbname = "e-cosecha"; // Nombre de la base de datos
 
     public function connect() {
         try {
@@ -16,5 +16,4 @@ class DB {
         }
     }
 }
-
 ?>

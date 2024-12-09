@@ -90,6 +90,13 @@ function mostrarDatos(){
                 JOIN persona pe ON tr.persona_id = pe.id
                 GROUP BY pe.nombre, ta.id")->fetchAll(PDO::FETCH_ASSOC);
     
+        $totalCajas = $db->query("
+        SELECT ta.id, CONCAT(pe.nombre,' ' ,pe.apellido_paterno, ' ', pe.apellido_materno) AS nombre_cosechero, COUNT(*) AS cantidad_cajas
+        FROM caja_cosechero ca
+        JOIN tarja ta ON ca.tarja_id = ta.id
+        JOIN trabajador tr ON ca.trabajador_id = tr.id
+        JOIN persona pe ON tr.persona_id = pe.id
+        GROUP BY pe.nombre")->fetchAll(PDO::FETCH_ASSOC);
         // Preparar la respuesta
         $response = [
             'success' => true,
@@ -101,7 +108,8 @@ function mostrarDatos(){
                 'variedades' => $variedad,
                 'trabajadores' => $trabajadores,
                 'tipo_cajas' => $tipo_cajas,
-                'cajas_cosechero' => $cantCajas
+                'cajas_cosechero' => $cantCajas,
+                'total_cajas' => $totalCajas
             ]
         ];
     
