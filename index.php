@@ -25,7 +25,8 @@ if (!$userSession->getCurrentUser()) {
             // Usuario validado
             $userSession->setCurrentUser($userForm);
             $user->setUser($userForm);
-            header("Location: index.php"); // Redirige a la página principal
+            // Redirige a index.html después de iniciar sesión
+            header("Location: http://127.0.0.1:5500/vista/layouts/index.html#");
             exit;
         } else {
             // Credenciales incorrectas
@@ -36,6 +37,7 @@ if (!$userSession->getCurrentUser()) {
     include 'vista/login.php';
     exit;
 }
+
 
 // Si hay sesión activa, carga la aplicación principal
 include 'vista/layouts/header.php';

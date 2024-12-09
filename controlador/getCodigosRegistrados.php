@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/db.php';
+require_once 'vista/layouts/includes/db.php';
 require_once '../modelo/tarja.php';
 
 if (isset($_GET['tarja_id'])) {
