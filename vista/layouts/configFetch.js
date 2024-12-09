@@ -114,3 +114,10 @@ function solicitudDelate(api, id){
         })
    // }
 }
+
+//http://localhost/mvc/endPoint/api_tarja.php
+//http://localhost/mvc/endPoint/api_persona.php?funcion=mostrarPersona
+//http://localhost/mvc/endPoint/api_tarja.php?funcion=mostrarDatos
+//http://localhost/mvc/endPoint/api_tarja.php?funcion=mostrarFilas
+
+//http://localhost/mvc/endPoint/api_trabajador.php?funcion=mostrarTrabajador

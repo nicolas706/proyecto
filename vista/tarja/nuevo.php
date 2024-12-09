@@ -74,6 +74,7 @@ try {
 
             const formData = new FormData(document.getElementById('tarjaForm'));
             formData.append('action', 'guardar_tarja');
+            console.log(formData);
 
             const response = await fetch('../../controlador/tarjaController.php', {
                 method: 'POST',
@@ -91,7 +92,7 @@ try {
                     <input type="text" name="codigo_completo" id="codigo_completo" maxlength="7" required>
                     <button type="button" onclick="agregarCodigo(${tarjaId})">Agregar Código</button>
                 `;
-                actualizarCodigosRegistrados(tarjaId);
+                //actualizarCodigosRegistrados(tarjaId);
             } else {
                 document.getElementById('codigoSection').innerHTML = `<p>${result}</p>`;
             }

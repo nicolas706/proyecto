@@ -90,3 +90,53 @@ function mostrarTrabajador($trabajador, $condicion) {
         error_log("Error en el endpoint: " . $e->getMessage());
     }
 }
+
+/**
+ * Función para manejar la lógica de eliminarPersona.
+ */
+/*
+function eliminarPersona($persona) {
+    try {
+        // Leer los datos JSON enviados al endpoint
+        $json = file_get_contents('php://input');
+        $inputData = json_decode($json, true);
+
+        // Validar los datos recibidos
+        if (!isset($inputData['tabla']) || !isset($inputData['condicion'])) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Datos incompletos para eliminar.'
+            ]);
+            return;
+        }
+
+        // Llamar al modelo para realizar la eliminación
+        $resultado = $persona->eliminar(
+            $inputData['tabla'], 
+            $inputData['condicion']
+        );
+
+        // Validar el resultado
+        if ($resultado) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Registro eliminado exitosamente.'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No se eliminó ningún registro.'
+            ]);
+        }
+    } catch (Exception $error) {
+        // Manejar errores y devolverlos en formato JSON
+        echo json_encode([
+            'success' => false,
+            'message' => 'Error en el servidor: ' . $error->getMessage()
+        ]);
+
+        // Registrar el error en el log del servidor
+        error_log("Error en el endpoint: " . $error->getMessage());
+    }
+}
+*/

@@ -42,15 +42,15 @@ class Trabajador {
     }
 
     public function eliminar($tabla, $condicion) {
-        $consulta = "DELETE FROM $tabla WHERE $condicion";
+        $eli = "DELETE FROM " . $tabla . " WHERE ". $condicion;
         try {
-            return $this->db->query($consulta);
+            return $this->db->query($eli);
         } catch (PDOException $e) {
-            echo "Error al eliminar: " . $e->getMessage();
+            echo "Error: " . $e->getMessage();
             return false;
         }
     }
-
+    
     public function codigoExiste($codigo) {
         $consulta = "SELECT COUNT(*) as total FROM trabajador WHERE codigo = :codigo";
         $stmt = $this->db->prepare($consulta);

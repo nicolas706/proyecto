@@ -1,10 +1,11 @@
 //Función genérica para mostrar en pantalla las filas de la tabla respectiva
-function mostrarDatos(datos, columnas) {
+function mostrarDatos(datos, columnas, value) {
     //Se limpia la tabla
     tabla.innerHTML = "";
     tituloTabla.innerHTML = "";
     tablaTarjas.innerHTML = "";
     botonNuevo.innerHTML = "";
+    formularioEdicion.innerHTML = "";
     //Se crea cabecera, para los respectivos titulos
     const botonNuevoRegistro = document.createElement("button");
     botonNuevoRegistro.textContent = "Nuevo Registro";
@@ -28,7 +29,7 @@ function mostrarDatos(datos, columnas) {
 
     //Creación de cada fila dependiendo de la cantidad de registros 
     datos.forEach((dato, index) => {
-        console.log("Este es el id de la fila: "+ dato.id)
+        //console.log("Este es el id de la fila: "+ dato.id)
         let id = dato.id;
         const fila = document.createElement("tr");
         columnas.forEach(columna => {
@@ -39,18 +40,26 @@ function mostrarDatos(datos, columnas) {
 
         const celdaAccion = document.createElement("td");
 
-        // Botón Editar
-        const botonEditar = document.createElement("button");
-        botonEditar.textContent = "Editar";
-        botonEditar.addEventListener("click", () => mostrarEdicion(index, datos, columnas));
-        celdaAccion.appendChild(botonEditar);
+        if(value == "tarjas") {
+            // Botón Editar
+            const consultaTarja = document.createElement("button");
+            consultaTarja.textContent = "Ver Detalles";
+            consultaTarja.addEventListener("click", () => vistaTarja(id, configEntidades.tarja.fila));
+            celdaAccion.appendChild(consultaTarja);
+        } else {
+            // Botón Editar
+            const botonEditar = document.createElement("button");
+            botonEditar.textContent = "Editar";
+            botonEditar.addEventListener("click", () => mostrarEdicion(index, datos, columnas));
+            celdaAccion.appendChild(botonEditar);
 
-        // Botón Eliminar
-        const botonEliminar = document.createElement("button");
-        botonEliminar.textContent = "Eliminar";
-        botonEliminar.addEventListener("click", () => solicitudDelate(apiConsultada, id));
-        celdaAccion.appendChild(botonEliminar);
-
+            // Botón Eliminar
+            const botonEliminar = document.createElement("button");
+            botonEliminar.textContent = "Eliminar";
+            botonEliminar.addEventListener("click", () => solicitudDelate(apiConsultada, id));
+            celdaAccion.appendChild(botonEliminar);
+        }
+        
         // Agregar celda de acción a la fila
         fila.appendChild(celdaAccion);
 
@@ -136,6 +145,12 @@ function nuevoRegistro(tablaConsultada) {
     botonNuevo.innerHTML = "";
     // Obtén la configuración de la columna desde configcolumnaes
     const config = configEntidades[tablaConsultada];
+
+    if (tablaConsultada == 'tarjas'){
+        console.log("Formualrio para Tarjas")
+        formularioTarja(datosJson);
+        return;
+    }
 
     if (!config) {
         console.error(`No se encontró configuración para la columna: ${tablaConsultada}`);
